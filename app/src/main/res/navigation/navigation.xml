@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/beginningFragment">
+    <fragment
+        android:id="@+id/cityFragment2"
+        android:name="com.example.weatherapplication.CityFragment.CityFragment"
+        android:label="CityFragment" >
+        <action
+            android:id="@+id/action_cityFragment2_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_cityFragment2_to_dialogFragmentWatchList"
+            app:destination="@id/dialogFragmentWatchList" />
+        <action
+            android:id="@+id/action_cityFragment2_to_opsFragment"
+            app:destination="@id/opsFragment"
+            app:popUpTo="@id/cityFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.weatherapplication.SearchFragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_cityFragment2"
+            app:destination="@id/cityFragment2"
+            app:popUpTo="@id/cityFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogFragmentWatchList"
+        android:name="com.example.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList"
+        android:label="fragment_dialog_watch_list"
+        tools:layout="@layout/fragment_dialog_watch_list" />
+    <fragment
+        android:id="@+id/opsFragment"
+        android:name="com.example.weatherapplication.OpsFragment.OpsFragment"
+        android:label="fragment_ops"
+        tools:layout="@layout/fragment_ops" >
+        <action
+            android:id="@+id/action_opsFragment_to_cityFragment2"
+            app:destination="@id/cityFragment2"
+            app:popUpTo="@id/cityFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/beginningFragment"
+        android:name="com.example.weatherapplication.BeginningFragment"
+        android:label="fragment_beginig"
+        tools:layout="@layout/fragment_beginning" >
+        <action
+            android:id="@+id/action_beginningFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/beginningFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_beginningFragment_to_cityFragment2"
+            app:destination="@id/cityFragment2"
+            app:popUpTo="@id/beginningFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

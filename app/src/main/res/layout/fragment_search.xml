@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    android:background="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SearchFragment.SearchFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/search_fragment_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="29dp"
+        android:padding="1.5sp"
+        android:src="@drawable/ic_arrow_back_24" />
+
+    <LinearLayout
+        android:id="@+id/search_fragment_search_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:layout_toEndOf="@id/search_fragment_back"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal"
+        android:background="@drawable/background_edit_text_no_city_fragment"
+        android:padding="8dp">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/search_fragment_city_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890"
+            android:layout_marginStart="8dp"
+            android:completionThreshold="1"
+            android:dropDownAnchor="@id/search_fragment_suggestion_cities"
+            android:background="@null"
+            android:hint="@string/enter_city_name"
+            android:singleLine="true"
+            android:popupElevation="0dp"
+            android:popupTheme="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/horizontal_line">
+        <TextView
+            android:id="@+id/search_fragment_suggestion_cities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="4dp"/>
+        <View
+            android:id="@+id/free_space_suggestion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/search_fragment_search_box"
+        android:background="#77F7F6F2"/>
+</RelativeLayout>

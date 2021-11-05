@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.14010416666666667" />
+        <entry key="app/src/main/res/drawable/ic_add_24.xml" value="0.3234375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/daily_weather_item.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/fragment_beginig.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/fragment_beginning.xml" value="0.3166496424923391" />
+        <entry key="app/src/main/res/layout/fragment_city.xml" value="0.5595667870036101" />
+        <entry key="app/src/main/res/layout/fragment_dialog_watch_list.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/fragment_ops.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.6" />
+        <entry key="app/src/main/res/layout/hourly_city_state_item.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/search_seggestion_item.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/watchlist_city_item.xml" value="0.72" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.34322916666666664" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.536" />
+      </ProjectState>
+    </option>
+  </component>
+</project>
