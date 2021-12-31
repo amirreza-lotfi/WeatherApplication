@@ -182,8 +182,8 @@ public class WeatherImage {
         }
 
         //snow
-        else if(description.equals("light snow") || description.equals("Snow") ||
-                description.equals("heavy snow") || description.equals("Shower snow") ||
+        else if(description.equals("light snow") || description.equals("snow") ||
+                description.equals("heavy snow") || description.equals("shower snow") ||
                 description.equals("light shower snow") ||
                 description.equals("heavy shower snow")){
             if(time.equals("night"))
@@ -192,8 +192,8 @@ public class WeatherImage {
                 return R.drawable.ic_snow;
         }
 
-        else if(description.equals("sleet") || description.equals("Light shower sleet") ||
-                description.equals("shower sleet") || description.equals("Light rain and snow") ||
+        else if(description.equals("sleet") || description.equals("light shower sleet") ||
+                description.equals("shower sleet") || description.equals("light rain and snow") ||
                 description.equals("rain and snow")){
             if(time.equals("night"))
                 return R.drawable.ic_rain_snow_night;
