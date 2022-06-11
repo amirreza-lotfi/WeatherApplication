@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".BeginningFragment">
+    tools:context="com.amirreza.presentation.weatherapplication.BeginningFragment">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/start_animation"

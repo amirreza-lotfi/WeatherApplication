@@ -6,7 +6,7 @@
     app:startDestination="@id/beginningFragment">
     <fragment
         android:id="@+id/cityFragment2"
-        android:name="com.example.weatherapplication.CityFragment.CityFragment"
+        android:name="com.amirreza.presentation.weatherapplication.CityFragment.CityFragment"
         android:label="CityFragment" >
         <action
             android:id="@+id/action_cityFragment2_to_searchFragment"
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.weatherapplication.SearchFragment.SearchFragment"
+        android:name="com.amirreza.presentation.weatherapplication.SearchFragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -33,12 +33,12 @@
     </fragment>
     <dialog
         android:id="@+id/dialogFragmentWatchList"
-        android:name="com.example.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList"
+        android:name="com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList"
         android:label="fragment_dialog_watch_list"
         tools:layout="@layout/fragment_dialog_watch_list" />
     <fragment
         android:id="@+id/opsFragment"
-        android:name="com.example.weatherapplication.OpsFragment.OpsFragment"
+        android:name="com.amirreza.presentation.weatherapplication.OpsFragment.OpsFragment"
         android:label="fragment_ops"
         tools:layout="@layout/fragment_ops" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/beginningFragment"
-        android:name="com.example.weatherapplication.BeginningFragment"
+        android:name="com.amirreza.presentation.weatherapplication.BeginningFragment"
         android:label="fragment_beginig"
         tools:layout="@layout/fragment_beginning" >
         <action

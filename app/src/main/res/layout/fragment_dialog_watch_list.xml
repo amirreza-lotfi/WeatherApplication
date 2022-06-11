@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_dialog_fragment"
     android:paddingBottom="24dp"
-    tools:context=".DialogFragmentOfWatchList.DialogFragmentWatchList">
+    tools:context="com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList">
 
     <TextView
         android:id="@+id/title"

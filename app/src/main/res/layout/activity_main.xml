@@ -6,7 +6,7 @@
     android:id="@+id/main_xml"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".MainActivity">
+    tools:context="com.amirreza.presentation.weatherapplication.MainActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_activity_fragment_container"
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/blackBlue"
-    tools:context=".OpsFragment.OpsFragment">
+    tools:context="com.amirreza.presentation.weatherapplication.OpsFragment.OpsFragment">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ops_fragment_ops"

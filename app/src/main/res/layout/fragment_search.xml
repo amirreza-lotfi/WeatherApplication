@@ -6,7 +6,7 @@
     android:id="@+id/container"
     android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SearchFragment.SearchFragment">
+    tools:context="com.amirreza.presentation.weatherapplication.SearchFragment.SearchFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/search_fragment_back"
