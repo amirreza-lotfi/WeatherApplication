@@ -26,7 +26,7 @@ public class CityRepository {
     }
 
     public List<WatchListWeather> getCityDataFromDatabase(){
-        return watchListDouInterface.getAll();
+        return watchListDouInterface.getAllCities();
     }
 
     public int getNumberOfCityInDatabase(){

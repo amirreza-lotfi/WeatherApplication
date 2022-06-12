@@ -1,4 +1,4 @@
-package com.amirreza.presentation.weatherapplication;
+package com.amirreza.data.configuration.local;
 
 import android.content.Context;
 
@@ -6,7 +6,6 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.amirreza.data.configuration.local.WatchListDouInterface;
 import com.amirreza.domain.entity.WatchListWeather;
 
 @Database(version = 1,exportSchema = false,entities = {WatchListWeather.class})

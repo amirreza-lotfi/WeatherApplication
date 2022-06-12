@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.amirreza.domain.entity.CityInformation;
+import com.amirreza.domain.entity.OneCallWeatherEntitys.CityWeatherAllInformation;
 import com.amirreza.domain.entity.WatchListWeather;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MainActivityViewModel extends ViewModel {
     private CityRepository cityRepository;
     private Disposable disposable;
-    private MutableLiveData<CityWeatherAllData> cityWeatherDataInOneCallMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<CityWeatherAllInformation> cityWeatherDataInOneCallMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<CityInformation> cityInformation = new MutableLiveData<>();
     private MutableLiveData<String> noConnectionError = new MutableLiveData<>();
     private MutableLiveData<String> reloadPage = new MutableLiveData<>();

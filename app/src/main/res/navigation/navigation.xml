@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/beginningFragment">
+    app:startDestination="@id/cityFragment2">
     <fragment
         android:id="@+id/cityFragment2"
         android:name="com.amirreza.presentation.weatherapplication.CityFragment.CityFragment"
@@ -45,22 +45,6 @@
             android:id="@+id/action_opsFragment_to_cityFragment2"
             app:destination="@id/cityFragment2"
             app:popUpTo="@id/cityFragment2"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/beginningFragment"
-        android:name="com.amirreza.presentation.weatherapplication.BeginningFragment"
-        android:label="fragment_beginig"
-        tools:layout="@layout/fragment_beginning" >
-        <action
-            android:id="@+id/action_beginningFragment_to_searchFragment"
-            app:destination="@id/searchFragment"
-            app:popUpTo="@id/beginningFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_beginningFragment_to_cityFragment2"
-            app:destination="@id/cityFragment2"
-            app:popUpTo="@id/beginningFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

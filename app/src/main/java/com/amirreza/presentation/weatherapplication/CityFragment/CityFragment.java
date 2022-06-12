@@ -30,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.amirreza.domain.entity.CityInformation;
+import com.amirreza.domain.entity.OneCallWeatherEntitys.CityWeatherAllInformation;
 import com.amirreza.presentation.weatherapplication.AppBarStateChangedListener;
 import com.amirreza.presentation.weatherapplication.MainActivityViewModel;
 import com.amirreza.domain.entity.TimeProcess;
@@ -39,6 +40,7 @@ import com.amirreza.domain.entity.WeatherImage;
 
 import com.amirreza.weatherapplication.R;
 
+import com.amirreza.weatherapplication.databinding.FragmentCityBinding;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ import static android.view.View.GONE;
 
 
 public class CityFragment extends Fragment{
+    private FragmentCityBinding fragmentCityBinding;
     private Toolbar toolbar;
     private String cityName;
     private int weatherImagePath;
@@ -59,7 +62,7 @@ public class CityFragment extends Fragment{
     private View xmlLayout;
     private RecyclerView watchListRecyclerView;
     private MainActivityViewModel mainActivityViewModel;
-    private CityWeatherAllData cityWeatherAllData;
+    private CityWeatherAllInformation cityWeatherAllData;
     private AppCompatImageView weatherImage;
     private AppCompatTextView temperature;
     private AppCompatTextView feelLike;
@@ -78,40 +81,16 @@ public class CityFragment extends Fragment{
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private NestedScrollView nestedScrollView;
 
+    private val city
     public CityFragment(){
     }
     
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_city, container, false);
-        xmlLayout = view;
-
-        progressBar = view.findViewById(R.id.progress_bar_city_fragment);
-        nestedScrollView = xmlLayout.findViewById(R.id.data);
-        watchListCityDrawerLayout = view.findViewById(R.id.city_fragment_drawer_layout);
-        collapsingToolbarLayout = view.findViewById(R.id.city_fragment_col);
-        appBarLayout = view.findViewById(R.id.appBarLayout);
-        toolbar = view.findViewById(R.id.city_fragment_toolbar);
-        newCityInWatchList = view.findViewById(R.id.city_fragment_add_city);
-        appBarLayout = view.findViewById(R.id.appBarLayout);
-        weatherImage = view.findViewById(R.id.city_fragment_weather_image);
-        temperature = view.findViewById(R.id.city_fragment_temperature_current);
-        feelLike = view.findViewById(R.id.city_fragment_feel_like);
-        pressure = view.findViewById(R.id.tv_pressure_value);
-        description = view.findViewById(R.id.city_fragment_description);
-        cityLocationInCollapsingToolbar = view.findViewById(R.id.city_fragment_city_name);
-        humidity = view.findViewById(R.id.tv_hummidity_value);
-        wind = view.findViewById(R.id.tv_wind_value);
-        updateTime = view.findViewById(R.id.city_fragment_date);
-        dailyRange = view.findViewById(R.id.tv_city_fragment_daily_range);
-        dailyWeatherRecyclerView = view.findViewById(R.id.city_fragment_recycler_view_daily);
-        hourlyWeatherRecyclerView = view.findViewById(R.id.city_fragment_hourly_weather_container);
-        loadingLayout = view.findViewById(R.id.loadingLayout);
-        refreshLayout = view.findViewById(R.id.city_fragment_swiper_refresh);
-        watchListRecyclerView = view.findViewById(R.id.city_fragment_watch_list_recycler_view);
-
-        return view;
+        fragmentCityBinding = FragmentCityBinding.inflate(inflater,container,false);
+        View rootView = fragmentCityBinding.getRoot();
+        return rootView;
     }
 
 
@@ -421,7 +400,6 @@ public class CityFragment extends Fragment{
     public void closeNavigationView(){
         watchListCityDrawerLayout.closeDrawer(GravityCompat.START);
     }
-
 
     public void refreshLayoutListener(){
         refreshLayout.setOnRefreshListener(() -> {

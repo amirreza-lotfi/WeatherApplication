@@ -1,6 +1,7 @@
 package com.amirreza.data.configuration.http;
 
 import com.amirreza.domain.entity.OneCallWeatherEntitys.CityWeatherAllInformation;
+import com.amirreza.presentation.weatherapplication.MainActivity;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
