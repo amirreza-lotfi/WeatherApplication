@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/cityFragment2">
+    app:startDestination="@id/cityFragment">
     <fragment
-        android:id="@+id/cityFragment2"
+        android:id="@+id/cityFragment"
         android:name="com.amirreza.presentation.weatherapplication.CityFragment.CityFragment"
         android:label="CityFragment" >
         <action
-            android:id="@+id/action_cityFragment2_to_searchFragment"
+            android:id="@+id/action_cityFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_cityFragment2_to_dialogFragmentWatchList"
+            android:id="@+id/action_cityFragment_to_dialogFragmentWatchList"
             app:destination="@id/dialogFragmentWatchList" />
         <action
-            android:id="@+id/action_cityFragment2_to_opsFragment"
+            android:id="@+id/action_cityFragment_to_opsFragment"
             app:destination="@id/opsFragment"
-            app:popUpTo="@id/cityFragment2"
+            app:popUpTo="@id/cityFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -27,8 +27,8 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_cityFragment2"
-            app:destination="@id/cityFragment2"
-            app:popUpTo="@id/cityFragment2"
+            app:destination="@id/cityFragment"
+            app:popUpTo="@id/cityFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <dialog
@@ -43,8 +43,8 @@
         tools:layout="@layout/fragment_ops" >
         <action
             android:id="@+id/action_opsFragment_to_cityFragment2"
-            app:destination="@id/cityFragment2"
-            app:popUpTo="@id/cityFragment2"
+            app:destination="@id/cityFragment"
+            app:popUpTo="@id/cityFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

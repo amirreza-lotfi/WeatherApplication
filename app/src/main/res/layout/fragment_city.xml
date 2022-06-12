@@ -49,7 +49,7 @@
                             tools:text="Istgah rah ahan - garms" />
 
                         <TextView
-                            android:id="@+id/city_fragment_date"
+                            android:id="@+id/city_fragment_updating_time"
                             android:layout_width="match_parent"
                             android:layout_height="24dp"
                             android:layout_below="@+id/city_fragment_city_name"
@@ -323,22 +323,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-        <FrameLayout
-            android:id="@+id/loadingLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:paddingTop="56dp"
-            android:visibility="visible"
-            tools:visibility="gone">
-            <ProgressBar
-                android:layout_marginTop="16dp"
-                android:id="@+id/progress_bar_city_fragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"/>
-        </FrameLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

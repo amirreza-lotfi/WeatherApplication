@@ -46,8 +46,8 @@ data class CityWeather(
 
     @SerializedName("wind_speed")
     val windSpeed: Double,
-    private var picturePath: Int = 0,
-    private var timeDescription: String = ""
+    var picturePath: Int = 0,
+    var timeDescription: String = ""
 ){
     init {
         setTimeDescription()

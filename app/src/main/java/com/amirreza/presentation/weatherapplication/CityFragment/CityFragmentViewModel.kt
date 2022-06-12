@@ -23,8 +23,12 @@ class CityFragmentViewModel(
     private val _isInternetConnectionStable = MutableLiveData(true)
     val isInternetConnectionStable:LiveData<Boolean> = _isInternetConnectionStable
 
+    private val _theDataHasNotGetFromServerYet = MutableLiveData(true)
+    val theDataHasNotGetFromServerYet:LiveData<Boolean> = _theDataHasNotGetFromServerYet
+
     private var firstCityInWatchList:WatchListWeather? = null
-    private var weatherOfTopCity:CityWeatherAllInformation? =null
+    private var _weatherOfTopCity:CityWeatherAllInformation? =null
+    val weatherOfTopCity: CityWeatherAllInformation? = _weatherOfTopCity
 
     init {
         setHasAnyCityInDatabase()
@@ -40,6 +44,8 @@ class CityFragmentViewModel(
                 }
 
                 override fun onSuccess(list: List<WatchListWeather>) {
+                    _theDataHasNotGetFromServerYet.value = true
+
                     if(list.isNotEmpty()){
                         _hasAnyCityInDatabase.value = true
                         firstCityInWatchList = list[0]
@@ -70,7 +76,8 @@ class CityFragmentViewModel(
                 }
 
                 override fun onSuccess(cityWeatherAllInformation: CityWeatherAllInformation) {
-                    weatherOfTopCity = cityWeatherAllInformation
+                    _weatherOfTopCity = cityWeatherAllInformation
+                    _theDataHasNotGetFromServerYet.value = false
                 }
 
                 override fun onError(e: Throwable) {
@@ -78,8 +85,18 @@ class CityFragmentViewModel(
                 }
             })
     }
+
     fun hasNotAnyCityInDatabase(): Boolean {
         return !hasAnyCityInDatabase.value!!
     }
+    fun getCityNameWithCountry():String{
+        return "${firstCityInWatchList?.cityName}, ${firstCityInWatchList?.country}"
+    }
 
+    fun getCityName():String{
+        return firstCityInWatchList?.cityName ?: ""
+    }
+    fun getCountryName():String{
+        return firstCityInWatchList?.country ?: ""
+    }
 }
