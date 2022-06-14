@@ -55,7 +55,7 @@ data class CityWeather(
     }
 
     private fun setTimeDescription() {
-        timeDescription = if (requestTime >= sunrise && requestTime <= sunset) "day" else "night"
+        timeDescription = if (requestTime in sunrise..sunset) "day" else "night"
     }
     private fun setPicturePath(){
         picturePath = WeatherImage.getImageRecourse(weatherDescription[0].description,timeDescription,temperature)

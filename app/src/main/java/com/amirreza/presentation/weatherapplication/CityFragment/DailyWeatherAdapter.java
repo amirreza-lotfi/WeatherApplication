@@ -8,24 +8,31 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amirreza.domain.entity.OneCallWeatherEntitys.CityDailyWeather;
+import com.amirreza.domain.entity.CityDailyWeather;
 import com.amirreza.domain.entity.TimeProcess;
 import com.amirreza.domain.entity.WeatherImage;
 import com.amirreza.weatherapplication.R;
+import com.amirreza.weatherapplication.databinding.DailyWeatherItemBinding;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapter.ViewHolder> {
-    ArrayList<CityDailyWeather> dailyWeather;
+    List<CityDailyWeather> dailyWeather;
+    DailyWeatherItemBinding binding;
 
-    public DailyWeatherAdapter(ArrayList<CityDailyWeather> dailyWeather){
+    public DailyWeatherAdapter(List<CityDailyWeather> dailyWeather){
         this.dailyWeather = dailyWeather;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.daily_weather_item,parent,false);
-        return new ViewHolder(view);
+        binding = DailyWeatherItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()),
+                parent,
+                false
+        );
+        View root = binding.getRoot();
+        return new ViewHolder(root);
 
     }
 
@@ -41,36 +48,23 @@ public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
-        AppCompatTextView time;
-        AppCompatTextView weatherDescription;
-        AppCompatTextView tempRangeInDay;
-        AppCompatTextView windSpeed;
-        AppCompatTextView humidity;
-        AppCompatImageView weatherImage;
-
         public ViewHolder(View itemView) {
             super(itemView);
-            time = itemView.findViewById(R.id.time_daily);
-            weatherDescription = itemView.findViewById(R.id.weather_description);
-            tempRangeInDay = itemView.findViewById(R.id.temp_value);
-            windSpeed = itemView.findViewById(R.id.wind_value);
-            humidity = itemView.findViewById(R.id.humidity_value);
-            weatherImage = itemView.findViewById(R.id.weather_description_image);
         }
 
         public void bindData(CityDailyWeather daily){
-            tempRangeInDay.setText((int)daily.getTempInDay()+"°/ "+(int)daily.getTempInNight()+"°");
-            windSpeed.setText(daily.getWindSpeed()+" km/h");
-            humidity.setText(daily.getHumidity()+"%");
-            weatherImage.setImageResource(WeatherImage.getImageRecourse(daily.getDescription(),"day",daily.getTempInDay()));
-            weatherDescription.setText(daily.getDescription());
+            binding.tempValue.setText((daily.getTemperature().getDay()+"°/ "+daily.getTemperature().getDay()+"°"));
+            binding.windValue.setText(daily.getWindSpeed()+" km/h");
+            binding.humidityValue.setText(daily.getHumidity()+"%");
+            binding.weatherDescriptionImage.setImageResource(
+                WeatherImage.getImageRecourse(
+                        daily.getWeatherDescription().get(0).getDescription(),"day",daily.getTemperature().getDay()
+                )
+            );
+            binding.weatherDescription.setText((CharSequence) daily.getWeatherDescription());
 
-            TimeProcess timeProcess = new TimeProcess(daily.getDate());
-            time.setText(timeProcess.getDateIn_MONTH_DAY_DAYOFWEEK_format());
+            TimeProcess timeProcess = new TimeProcess(daily.getDt());
+            binding.timeDaily.setText(timeProcess.getDateIn_MONTH_DAY_DAYOFWEEK_format());
         }
-
     }
-
-
 }

@@ -6,7 +6,7 @@
     app:startDestination="@id/cityFragment">
     <fragment
         android:id="@+id/cityFragment"
-        android:name="com.amirreza.presentation.weatherapplication.CityFragment.CityFragment"
+        android:name="com.amirreza.presentation.weatherapplication.CityFragment.CityFragmentFuck"
         android:label="CityFragment" >
         <action
             android:id="@+id/action_cityFragment_to_searchFragment"

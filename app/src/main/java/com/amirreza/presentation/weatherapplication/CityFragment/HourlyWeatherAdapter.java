@@ -8,29 +8,36 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amirreza.domain.entity.OneCallWeatherEntitys.CityHourlyWeather;
 import com.amirreza.domain.entity.TimeProcess;
 import com.amirreza.weatherapplication.R;
+import com.amirreza.weatherapplication.databinding.HourlyCityStateItemBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdapter.ViewHolder> {
-    private ArrayList<CityHourlyWeather> cityHourlyWeathers;
+    private List<CityHourlyWeather> cityHourlyWeathers;
+    HourlyCityStateItemBinding binding;
 
-    public HourlyWeatherAdapter(ArrayList<CityHourlyWeather> data){
+    public HourlyWeatherAdapter(List<CityHourlyWeather> data){
         cityHourlyWeathers = data;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hourly_city_state_item,parent,false);
+        binding = HourlyCityStateItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()),
+                parent,
+                false
+        );
+        View view = binding.getRoot();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CityHourlyWeather cityHourlyWeather = cityHourlyWeathers.get(position);
-        holder.bindData(cityHourlyWeather.getDataReceivingTime(),
-                        cityHourlyWeather.getImagePath(),
-                        cityHourlyWeather.getTemperature());
+        holder.bindData(cityHourlyWeather.getRequestTime(),cityHourlyWeather.getImagePath(),cityHourlyWeather.getTemp());
     }
 
     @Override
@@ -46,9 +53,9 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.time = itemView.findViewById(R.id.hourly_state_item_time);
-            this.imageWeather = itemView.findViewById(R.id.hourly_state_item_image);
-            this.temperature = itemView.findViewById(R.id.hourly_state_item_temp);
+            this.time = binding.hourlyStateItemTime;
+            this.imageWeather = binding.hourlyStateItemImage;
+            this.temperature = binding.hourlyStateItemTemp;
         }
 
         public void bindData(long time, int imagePath, double temperature){
