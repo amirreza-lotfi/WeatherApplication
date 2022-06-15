@@ -6,7 +6,7 @@
     app:startDestination="@id/cityFragment">
     <fragment
         android:id="@+id/cityFragment"
-        android:name="com.amirreza.presentation.weatherapplication.CityFragment.CityFragmentFuck"
+        android:name="com.amirreza.presentation.weatherapplication.CityFragment.CityFragment"
         android:label="CityFragment" >
         <action
             android:id="@+id/action_cityFragment_to_searchFragment"
@@ -14,11 +14,6 @@
         <action
             android:id="@+id/action_cityFragment_to_dialogFragmentWatchList"
             app:destination="@id/dialogFragmentWatchList" />
-        <action
-            android:id="@+id/action_cityFragment_to_opsFragment"
-            app:destination="@id/opsFragment"
-            app:popUpTo="@id/cityFragment"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -36,15 +31,4 @@
         android:name="com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList"
         android:label="fragment_dialog_watch_list"
         tools:layout="@layout/fragment_dialog_watch_list" />
-    <fragment
-        android:id="@+id/opsFragment"
-        android:name="com.amirreza.presentation.weatherapplication.OpsFragment.OpsFragment"
-        android:label="fragment_ops"
-        tools:layout="@layout/fragment_ops" >
-        <action
-            android:id="@+id/action_opsFragment_to_cityFragment2"
-            app:destination="@id/cityFragment"
-            app:popUpTo="@id/cityFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
 </navigation>

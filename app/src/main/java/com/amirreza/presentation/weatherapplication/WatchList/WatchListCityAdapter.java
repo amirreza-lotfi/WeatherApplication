@@ -6,13 +6,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amirreza.domain.entity.WatchListWeather;
-import com.amirreza.presentation.weatherapplication.MainActivityViewModel;
+import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util.OnItemClickCallBackWatchList;
 import com.amirreza.weatherapplication.R;
 
 
@@ -21,11 +18,11 @@ import java.util.ArrayList;
 public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdapter.cityWeather> {
 
     private ArrayList<WatchListWeather> cities;
-    private FragmentActivity context;
+    private final OnItemClickCallBackWatchList onItemClickCallBack;
 
-    public WatchListCityAdapter(ArrayList<WatchListWeather> cities, FragmentActivity context ){
+    public WatchListCityAdapter(ArrayList<WatchListWeather> cities, OnItemClickCallBackWatchList onItemClickCallBack ){
         this.cities = cities;
-        this.context = context;
+        this.onItemClickCallBack = onItemClickCallBack;
     }
 
     public void setCities(ArrayList<WatchListWeather> cities){
@@ -83,8 +80,6 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
         private final TextView description;
         private final TextView temperature;
         private final TextView cityName;
-        private MainActivityViewModel mainActivityViewModel;
-        private MutableLiveData<WatchListWeather> watchListWeatherMutableLiveData;
 
         public cityWeather(View itemView) {
             super(itemView);
@@ -92,8 +87,6 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
             weatherImage = itemView.findViewById(R.id.watchlist_city_item_image);
             cityName = itemView.findViewById(R.id.watchlist_city_item_city_name);
             temperature = itemView.findViewById(R.id.watchlist_city_item_temperature);
-
-            mainActivityViewModel = new ViewModelProvider(context).get(MainActivityViewModel.class);
         }
 
         public void bindData(WatchListWeather watchListWeather){
@@ -102,19 +95,14 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
             description.setText(watchListWeather.getDescription());
             weatherImage.setImageResource(Integer.parseInt(watchListWeather.getWeatherImagePath()));
 
-            itemView.setOnClickListener(v -> {
-                mainActivityViewModel.getIsWatchListItemSelect().setValue(true);
-                mainActivityViewModel.getWatchListItemSelected().setValue(watchListWeather);
-            });
+            itemView.setOnClickListener(view -> onItemClickCallBack.onClick(watchListWeather));
 
-            itemView.setOnLongClickListener(v -> {
-                if(cities.size()>1) {
-                    mainActivityViewModel.getDeleteWatchList().setValue(watchListWeather);
-                    mainActivityViewModel.getNavigateToDialogDeleteWatchList().setValue(true);
-                    return true;
-                }
+            itemView.setOnLongClickListener(view -> {
+                onItemClickCallBack.onLongClick(watchListWeather);
                 return true;
             });
+
         }
     }
+
 }

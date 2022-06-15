@@ -17,17 +17,20 @@ import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.amirreza.domain.entity.OneCallWeatherEntitys.CityWeatherAllInformation
 import com.amirreza.domain.entity.TimeProcess
+import com.amirreza.domain.entity.WatchListWeather
+import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList
+import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util.OnDialogActions
+import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util.OnItemClickCallBackWatchList
 import com.amirreza.presentation.weatherapplication.WatchList.WatchListCityAdapter
-import com.amirreza.presentation.weatherapplication.base.WeatherFragment
+import com.amirreza.presentation.weatherapplication.base.RefreshableWeatherFragment
 import com.amirreza.weatherapplication.R
 import com.amirreza.weatherapplication.databinding.FragmentCityBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class CityFragment : WeatherFragment() {
+class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
 
     private lateinit var binding: FragmentCityBinding
     private val cityFragmentViewModel:CityFragmentViewModel by viewModel()
@@ -35,7 +38,7 @@ class CityFragment : WeatherFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCityBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,12 +47,10 @@ class CityFragment : WeatherFragment() {
         setToolbarAndCollapsingToolbarLayout()
         setDrawerNavigationView()
         setRefreshFragment()
-        binding.loadingScreen.addAnimatorListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animator: Animator) {
-                Log.i("", "")
-            }
+        binding.viewLanding.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animator: Animator) {Log.i("", "")}
             override fun onAnimationEnd(animator: Animator) {
-                binding.loadingScreen.visibility = GONE
+                binding.viewLanding.visibility = GONE
                 if(cityFragmentViewModel.hasNotAnyCityInDatabase()){
                     findNavController(view).navigate(R.id.action_cityFragment_to_searchFragment)
                 }else{
@@ -59,7 +60,12 @@ class CityFragment : WeatherFragment() {
             override fun onAnimationCancel(animator: Animator) {}
             override fun onAnimationRepeat(animator: Animator) {}
         })
-
+        cityFragmentViewModel.transactionToDialogFragment.observe(viewLifecycleOwner){ isItemSelected ->
+            if(isItemSelected){
+                cityFragmentViewModel.deleteWatchList()
+                findNavController(requireActivity(),R.id.fragmentContainerView).navigate(R.id.action_cityFragment_to_dialogFragmentWatchList)
+            }
+        }
     }
 
     private fun setToolbarAndCollapsingToolbarLayout() {
@@ -124,8 +130,8 @@ class CityFragment : WeatherFragment() {
         setUpWatchListAdapter()
         setHourlyWeatherAdapter()
         setDailyWeather()
+        super.setProgressBarIndicator(false)
     }
-
     private fun setCurrentWeather() {
         val cityWeather: CityWeatherAllInformation = cityFragmentViewModel.weatherOfTopCity!!
 
@@ -146,7 +152,7 @@ class CityFragment : WeatherFragment() {
         binding.cityFragmentCol.title = cityFragmentViewModel.getCountryName()
     }
     private fun setUpWatchListAdapter(){
-        val watchListAdapter = WatchListCityAdapter(cityFragmentViewModel.getAllCitiesInWatchList(),requireActivity())
+        val watchListAdapter = WatchListCityAdapter(cityFragmentViewModel.getAllCitiesInWatchList(),this)
         binding.cityFragmentWatchListRecyclerView.adapter = watchListAdapter
         binding.cityFragmentWatchListRecyclerView.layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
     }
@@ -156,14 +162,12 @@ class CityFragment : WeatherFragment() {
         binding.cityFragmentHourlyWeatherContainer.layoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
         solveRecyclerViewScroll(binding.cityFragmentHourlyWeatherContainer)
     }
-
     private fun setDailyWeather(){
         val dailyWeatherAdapter = DailyWeatherAdapter(cityFragmentViewModel.getDailyWeather())
         binding.cityFragmentRecyclerViewDaily.layoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
         binding.cityFragmentRecyclerViewDaily.adapter = dailyWeatherAdapter
         solveRecyclerViewScroll(binding.cityFragmentRecyclerViewDaily)
     }
-
     private fun setRefreshFragment() {
         binding.cityFragmentSwiperRefresh.setOnRefreshListener {
             binding.cityFragmentDrawerLayout.closeDrawer(GravityCompat.START)
@@ -172,4 +176,19 @@ class CityFragment : WeatherFragment() {
         }
     }
 
+    override fun onClick(watchListWeather: WatchListWeather) {
+        //todo refresh
+    }
+
+    override fun onLongClick(watchListWeather: WatchListWeather) {
+        DialogFragmentWatchList(object: OnDialogActions{
+            override fun onDeleteClicked(watchListWeather: WatchListWeather) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelClicked(watchListWeather: WatchListWeather) {
+                TODO("Not yet implemented")
+            }
+        },watchListWeather)
+    }
 }

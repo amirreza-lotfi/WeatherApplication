@@ -1,19 +1,19 @@
 package com.amirreza.domain.entity;
 
 
-public class CityInformation {
+public class CityEntity {
     private double lat;
     private double lon;
     private String city;
     private String country;
 
-    public CityInformation(double lat, double lon, String city, String country) {
+    public CityEntity(double lat, double lon, String city, String country) {
         this.lat = lat;
         this.lon = lon;
         this.city = city;
         this.country = country;
     }
-    public CityInformation(String lat, String lon) {
+    public CityEntity(String lat, String lon) {
         this.lat = Double.parseDouble(lat);
         this.lon = Double.parseDouble(lon);
     }

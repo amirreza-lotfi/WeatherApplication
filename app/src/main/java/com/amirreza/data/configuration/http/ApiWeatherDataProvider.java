@@ -1,7 +1,5 @@
 package com.amirreza.data.configuration.http;
 
-import com.amirreza.presentation.weatherapplication.MainActivity;
-
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
