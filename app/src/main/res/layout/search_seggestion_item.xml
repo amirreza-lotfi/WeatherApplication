@@ -4,7 +4,7 @@
     android:layout_height="50dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimary">
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/search_suggestion_city_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -16,7 +16,7 @@
         android:textSize="18sp"
         android:letterSpacing="0.02"
         android:background="@color/colorPrimary"/>
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/search_suggestion_city_other_information"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -24,7 +24,6 @@
         android:layout_toEndOf="@id/search_suggestion_city_name"
         tools:text="ardabil/ardabil province/iran"
         android:gravity="center_vertical"
-        android:textColor="@color/lessImportantColor"
-        />
+        android:textColor="@color/lessImportantColor"/>
 
 </RelativeLayout>

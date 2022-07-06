@@ -360,19 +360,19 @@
             </LinearLayout>
         </com.google.android.material.navigation.NavigationView>
 
-
-</androidx.drawerlayout.widget.DrawerLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/view_landing"
-            app:lottie_autoPlay="true"
-            android:background="@color/colorPrimary"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:lottie_rawRes="@raw/earth"/>
-    </FrameLayout>
+            android:layout_height="match_parent">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/view_landing"
+                app:lottie_autoPlay="true"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_rawRes="@raw/earth"/>
+        </FrameLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
+
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 

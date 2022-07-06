@@ -1,10 +1,12 @@
 package com.amirreza.presentation.weatherapplication.SearchFragment
 
+import android.content.ClipData
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.amirreza.domain.entity.CityEntity
@@ -28,69 +30,66 @@ class SearchFragment:Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setAutoCompleteSearch()
-        chooseSuggestion()
         binding.freeSpaceSuggestion.setOnClickListener{
             binding.searchFragmentCityName.showDropDown()
         }
         backButtonManaging()
-    }
-    private fun chooseSuggestion(){
-        binding.searchFragmentCityName.setOnClickListener { selectedItem ->
-            val binding = SearchSeggestionItemBinding.bind(selectedItem)
-
-            val cityName: String = binding.searchSuggestionCityName.text as String
-            val country: String = getCountryName(selectedItem)
-            val lat = getLatFromInformation(selectedItem)
-            val lon = getLonFromInformation(selectedItem)
-
-            setAutoCompleteSearchTextView(country)
-
-
-            cityFragmentViewModel
-                .addCityToDatabaseFromSearchFragment(
-                    WatchListWeather(
-                        cityName = cityName,
-                        country = country,
-                        description = "",
-                        temperature = "",
-                        weatherImagePath = "",
-                        lat = lat,
-                        lon = lon
-                    )
-                )
-
-
-
-            findNavController(requireView()).navigate(R.id.action_searchFragment_to_cityFragment2)
-        }
     }
 
 
 
 
     private fun setAutoCompleteSearch() {
-        val suggestionCities =
-            AllCityInTheWorld(
-                context
-            )
-        val adapter = SearchTextViewAdapter(requireContext(), suggestionCities.allCitiesInTheWorld)
+        val suggestionCities = AllCityInTheWorld(context)
+        val adapter = SearchTextViewAdapter(
+            requireContext(),
+            suggestionCities.allCitiesInTheWorld,
+            object : ItemClickListener{
+                override fun onClick(view: View) {
+                    val cityName: String = view.findViewById<AppCompatTextView>(R.id.search_suggestion_city_name).text as String
+                    val country: String = getCountryName(view)
+                    val lat = getLatFromInformation(view)
+                    val lon = getLonFromInformation(view)
+
+                    setAutoCompleteSearchTextView(country)
+
+
+                    cityFragmentViewModel
+                        .addCityToDatabaseFromSearchFragment(
+                            WatchListWeather(
+                                cityName = cityName,
+                                country = country,
+                                description = "",
+                                temperature = "",
+                                weatherImagePath = "",
+                                lat = lat,
+                                lon = lon
+                            )
+                        )
+
+
+
+                    findNavController(requireView()).popBackStack()
+                }
+            }
+        )
         binding.searchFragmentCityName.setAdapter(adapter)
     }
-
-
 
     private fun getLatFromInformation(view: View): Double {
         val latTv = view.findViewById<TextView>(R.id.search_suggestion_city_other_information)
         return latTv.text.toString().split("/").toTypedArray()[1].split(",")
             .toTypedArray()[0].toDouble()
     }
+
+
     private fun getLonFromInformation(view: View): Double {
         val lonTv = view.findViewById<TextView>(R.id.search_suggestion_city_other_information)
         return lonTv.text.toString().split("/").toTypedArray()[1].split(",")
             .toTypedArray()[1].toDouble()
     }
+
     private fun getCountryName(view: View): String {
         val country = view.findViewById<TextView>(R.id.search_suggestion_city_other_information)
         return country.text.toString().split("/").toTypedArray()[0]
@@ -103,4 +102,7 @@ class SearchFragment:Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
+}
+interface ItemClickListener{
+    fun onClick(view: View)
 }

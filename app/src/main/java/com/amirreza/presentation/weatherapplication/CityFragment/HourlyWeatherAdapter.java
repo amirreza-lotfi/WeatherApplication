@@ -8,7 +8,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amirreza.domain.entity.OneCallWeatherEntitys.CityHourlyWeather;
+import com.amirreza.domain.entity.CityAllWeatherDataEntity.HourlyWeather;
 import com.amirreza.domain.entity.TimeProcess;
 import com.amirreza.weatherapplication.R;
 import com.amirreza.weatherapplication.databinding.HourlyCityStateItemBinding;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdapter.ViewHolder> {
-    private List<CityHourlyWeather> cityHourlyWeathers;
+    private List<HourlyWeather> cityHourlyWeathers;
     HourlyCityStateItemBinding binding;
 
-    public HourlyWeatherAdapter(List<CityHourlyWeather> data){
+    public HourlyWeatherAdapter(List<HourlyWeather> data){
         cityHourlyWeathers = data;
     }
     @Override
@@ -36,8 +36,8 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CityHourlyWeather cityHourlyWeather = cityHourlyWeathers.get(position);
-        holder.bindData(cityHourlyWeather.getRequestTime(),cityHourlyWeather.getImagePath(),cityHourlyWeather.getTemp());
+        HourlyWeather cityHourlyWeather = cityHourlyWeathers.get(position);
+        holder.bindData(cityHourlyWeather.getDt(),cityHourlyWeather.getImagePath(),cityHourlyWeather.getTemp());
     }
 
     @Override

@@ -1,19 +1,20 @@
-package com.amirreza.domain.entity
+package com.amirreza.domain.entity.CityAllWeatherDataEntity
 
-import com.amirreza.domain.entity.OneCallWeatherEntitys.FeelsLike
-import com.amirreza.domain.entity.OneCallWeatherEntitys.Temperature
-import com.amirreza.domain.entity.OneCallWeatherEntitys.WeatherDescription
+import com.amirreza.common.getImageRecourse
+
 import com.google.gson.annotations.SerializedName
 
-data class CityDailyWeather(
+data class DailyWeather(
     val clouds: Int,
 
     @SerializedName("dew_point")
     val AtmosphericTemperature: Double,
+
     val dt: Int,
 
     @SerializedName("feels_like")
     val feelsLike: FeelsLike,
+
     val humidity: Int,
 
     /**
@@ -32,7 +33,6 @@ data class CityDailyWeather(
     @SerializedName("moonset")
     val moonSet: Int,
 
-
     /**
      * Probability of precipitation.
      * The values of the parameter vary between 0 and 1,
@@ -42,12 +42,10 @@ data class CityDailyWeather(
     val probabilityOfPrecipitation: Double,
 
     val pressure: Int,
-    val rain: Double,
     val sunrise: Int,
     val sunset: Int,
 
-    @SerializedName("temp")
-    val temperature: Temperature,
+    val temp: Temp,
 
     /**
      *  The maximum value of UV index for the day
@@ -55,23 +53,24 @@ data class CityDailyWeather(
     @SerializedName("uvi")
     val maxUV: Double,
 
-    @SerializedName("weather")
-    val weatherDescription: List<WeatherDescription>,
+    val weather: List<Weather>,
 
     /**
      * Wind direction, degrees (meteorological
      * */
+
     val wind_deg: Int,
+    val wind_gust: Double,
 
     @SerializedName("wind_speed")
     val windSpeed: Double,
     private var imagePath: Int = 0
 ){
     init {
-        imagePath = WeatherImage.getImageRecourse(
-            weatherDescription[0].description,
+        imagePath = getImageRecourse(
+            weather[0].description,
             "day",
-            temperature.day
+            temp.day
         )
     }
 }

@@ -28,8 +28,6 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
     public void setCities(ArrayList<WatchListWeather> cities){
         this.cities.clear();
         notifyDataSetChanged();
-        this.cities = cities;
-        notifyDataSetChanged();
     }
 
 

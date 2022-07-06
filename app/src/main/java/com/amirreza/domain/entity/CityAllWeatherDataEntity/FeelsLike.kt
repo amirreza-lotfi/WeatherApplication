@@ -1,4 +1,4 @@
-package com.amirreza.domain.entity.OneCallWeatherEntitys
+package com.amirreza.domain.entity.CityAllWeatherDataEntity
 
 data class FeelsLike(
     val day: Double,

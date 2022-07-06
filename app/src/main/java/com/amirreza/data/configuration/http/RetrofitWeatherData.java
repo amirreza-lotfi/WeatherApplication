@@ -1,6 +1,6 @@
 package com.amirreza.data.configuration.http;
 
-import com.amirreza.domain.entity.OneCallWeatherEntitys.CityWeatherAllInformation;
+import com.amirreza.domain.entity.CityAllWeatherDataEntity.CityAllWeatherData;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -9,7 +9,7 @@ import retrofit2.http.Query;
 public interface RetrofitWeatherData {
 
     @GET("onecall")
-    Single<CityWeatherAllInformation> getData(
+    Single<CityAllWeatherData> getData(
             @Query("lat" ) double lat,
             @Query("lon") double lon,
             @Query("units") String unit,

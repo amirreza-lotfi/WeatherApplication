@@ -16,10 +16,10 @@ import com.amirreza.weatherapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchTextViewAdapter extends ArrayAdapter<String> {
+public class SearchTextViewAdapter extends ArrayAdapter<String>  {
     private final List<String> citiesName;
     private List<String> supportCitiesNameWhenSuggestionEmpty;
-
+    private ItemClickListener i;
 
     @NonNull
     @Override
@@ -33,12 +33,15 @@ public class SearchTextViewAdapter extends ArrayAdapter<String> {
 
         cityName.setText(cityAndCountry[0]);
         cityData.setText(cityAndCountry[1]+"/ "+cityAndCountry[2]+" , "+cityAndCountry[3]);
+
+        convertView.setOnClickListener(view -> i.onClick(view));
         return convertView;
     }
 
-    public SearchTextViewAdapter(@NonNull Context context, @NonNull List<String> objects) {
+    public SearchTextViewAdapter(@NonNull Context context, @NonNull List<String> objects, ItemClickListener i) {
         super(context, 0, objects);
         citiesName = new ArrayList<>(objects);
+        this.i = i;
     }
 
     @NonNull

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amirreza.domain.entity.CityEntity
-import com.amirreza.domain.entity.OneCallWeatherEntitys.CityWeatherAllInformation
+import com.amirreza.domain.entity.CityAllWeatherDataEntity.CityAllWeatherData
 import com.amirreza.domain.entity.TimeProcess
 import com.amirreza.domain.entity.WatchListWeather
 import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList
@@ -49,13 +49,12 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
 
         cityFragmentViewModel.mustIntroLottieAnimationShow.observe(viewLifecycleOwner){ mustShow ->
             if(mustShow){
+                landingView.visibility = VISIBLE
                 landingView.addAnimatorListener(object : CityLandingAnimationListeners() {
                     override fun onAnimationStart(p0: Animator?) {
-                        cityFragmentViewModel.getData()
                     }
 
                     override fun onAnimationEnd(p0: Animator?) {
-                        landingView.visibility = GONE
                         cityFragmentViewModel.uiEvent(CityFragmentEvent.LandingViewAnimationEnd)
                     }
                 })
@@ -66,6 +65,7 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
         }
 
         cityFragmentViewModel.mustNavigateToSearchFragment.observe(viewLifecycleOwner){ mustNavigate->
+
             if(mustNavigate){
                 findNavController(view).navigate(R.id.action_cityFragment_to_searchFragment)
             }else{
@@ -107,7 +107,7 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
     }
 
     private fun setCurrentWeather() {
-        val cityWeather: CityWeatherAllInformation = cityFragmentViewModel.weatherOfTopCity!!
+        val cityWeather: CityAllWeatherData = cityFragmentViewModel.weatherOfTopCity!!
 
         binding.cityFragmentWeatherImage.setImageResource(cityWeather.getWeatherImagePath())
         binding.cityFragmentTemperatureCurrent.text = cityWeather.getCurrentTemperatureWithCelsius()
@@ -116,9 +116,9 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
         binding.cityFragmentCityName.text = cityFragmentViewModel.getCityNameWithCountry()
         binding.tvPressureText.text = "${cityWeather.current.pressure} hPa"
         binding.tvHummidityValue.text = "${cityWeather.current.humidity}%"
-        binding.tvWindValue.text = "${cityWeather.current.windSpeed} km/h"
+        binding.tvWindValue.text = "${cityWeather.current.wind_speed} km/h"
 
-        val timeProcess = TimeProcess(cityWeather.current.requestTime.toLong())
+        val timeProcess = TimeProcess(cityWeather.current.dt.toLong())
         binding.cityFragmentUpdatingTime.text = timeProcess.dateIn_MONTH_DAY_YEAR_format
         binding.tvDailyRangeText.text = cityWeather.getRangeOfCurrentTemperature()
 

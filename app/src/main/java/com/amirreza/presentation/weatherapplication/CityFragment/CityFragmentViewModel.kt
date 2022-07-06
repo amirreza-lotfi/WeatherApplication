@@ -2,17 +2,25 @@ package com.amirreza.presentation.weatherapplication.CityFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.amirreza.domain.entity.CityDailyWeather
-import com.amirreza.domain.entity.OneCallWeatherEntitys.CityHourlyWeather
-import com.amirreza.domain.entity.OneCallWeatherEntitys.CityWeatherAllInformation
+import androidx.lifecycle.viewModelScope
+import com.amirreza.domain.entity.CityAllWeatherDataEntity.CityAllWeatherData
+import com.amirreza.domain.entity.CityAllWeatherDataEntity.DailyWeather
+import com.amirreza.domain.entity.CityAllWeatherDataEntity.HourlyWeather
 import com.amirreza.domain.entity.WatchListWeather
 import com.amirreza.domain.repository.WatchListRepository
 import com.amirreza.domain.repository.WeatherService
 import com.amirreza.presentation.weatherapplication.MainActivity
 import com.amirreza.presentation.weatherapplication.base.CitySingleObserver
 import com.amirreza.presentation.weatherapplication.base.WeatherViewModel
+import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.annotations.SchedulerSupport.IO
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import java.util.*
 
 class CityFragmentViewModel(
@@ -43,8 +51,8 @@ class CityFragmentViewModel(
     private var _citiesInWatchList: MutableList<WatchListWeather> = mutableListOf()
     var citiesInWatchList:MutableList<WatchListWeather> = _citiesInWatchList
 
-    private var _weatherOfTopCity:CityWeatherAllInformation? =null
-    val weatherOfTopCity: CityWeatherAllInformation? = _weatherOfTopCity
+    private var _weatherOfTopCity:CityAllWeatherData? =null
+    val weatherOfTopCity: CityAllWeatherData? = _weatherOfTopCity
 
 
     fun getData(){
@@ -53,8 +61,8 @@ class CityFragmentViewModel(
 
     private fun fetchWatchListCitiesFromDataBase(){
         daoDatabase.getAllCities()
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CitySingleObserver<List<WatchListWeather>>(compositeDisposable) {
                 override fun onSuccess(list: List<WatchListWeather>) {
                     if(list.isEmpty()){
@@ -86,8 +94,8 @@ class CityFragmentViewModel(
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : CitySingleObserver<CityWeatherAllInformation>(compositeDisposable){
-                override fun onSuccess(cityWeatherAllInformation: CityWeatherAllInformation) {
+            .subscribe(object : CitySingleObserver<CityAllWeatherData>(compositeDisposable){
+                override fun onSuccess(cityWeatherAllInformation: CityAllWeatherData) {
                     _weatherOfTopCity = cityWeatherAllInformation
                     addCityToWatchList()
                 }
@@ -122,18 +130,18 @@ class CityFragmentViewModel(
         }
         return arrayListOf()
     }
-    fun getHourlyWeather():List<CityHourlyWeather>{
+    fun getHourlyWeather():List<HourlyWeather>{
         val DAY_TO_MILLI_SECOND = 86452
         val MAXIMUM_NUMBER_WEATHER = 23
 
-        val cityHourlyWeather = weatherOfTopCity?.current?.cityHourlyWeather ?: listOf()
+        val cityHourlyWeather = weatherOfTopCity?.hourly ?: listOf()
 
         var i = 0
         while (i < cityHourlyWeather.size && i < MAXIMUM_NUMBER_WEATHER) {
-            val weatherHour: CityHourlyWeather = cityHourlyWeather[i]
+            val weatherHour: HourlyWeather = cityHourlyWeather[i]
             val sunrise: Long = (weatherOfTopCity?.current?.sunrise ?: 0L) as Long
             val sunset: Long = (weatherOfTopCity?.current?.sunset ?: 0L) as Long
-            val dt: Int = weatherHour.requestTime
+            val dt: Int = weatherHour.dt
             if (dt > sunrise && dt > sunset) {
                 cityHourlyWeather[i].setImage(sunrise + DAY_TO_MILLI_SECOND, sunset + DAY_TO_MILLI_SECOND)
             } else {
@@ -141,10 +149,10 @@ class CityFragmentViewModel(
             }
             ++i
         }
-        return weatherOfTopCity?.current?.cityHourlyWeather ?: listOf()
+        return weatherOfTopCity?.hourly ?: listOf()
     }
-    fun getDailyWeather():List<CityDailyWeather>{
-        return weatherOfTopCity?.current?.daily ?: listOf()
+    fun getDailyWeather():List<DailyWeather>{
+        return weatherOfTopCity?.daily ?: listOf()
     }
 
     fun getCityNameWithCountry():String = "$cityName, $countryName"
@@ -159,8 +167,12 @@ class CityFragmentViewModel(
             daoDatabase.deleteCityFromWatchList(wantToDeleteCity!!)
         }
     }
+
     fun addCityToDatabaseFromSearchFragment(watchListWeather: WatchListWeather){
         setCityNameAndCountryName(watchListWeather)
-        daoDatabase.addCityToWatchList(watchListWeather)
+        viewModelScope.launch(Dispatchers.IO) {
+            daoDatabase.addCityToWatchList(watchListWeather)
+        }
     }
 }
+

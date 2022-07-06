@@ -1,6 +1,6 @@
-package com.amirreza.domain.entity.OneCallWeatherEntitys
+package com.amirreza.domain.entity.CityAllWeatherDataEntity
 
-data class WeatherDescription(
+data class Weather(
     val description: String,
     val icon: String,
     val id: Int,
