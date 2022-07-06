@@ -3,17 +3,15 @@ package com.amirreza.presentation.weatherapplication.CityFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.amirreza.domain.entity.CityDailyWeather
-import com.amirreza.domain.entity.CityEntity
 import com.amirreza.domain.entity.OneCallWeatherEntitys.CityHourlyWeather
 import com.amirreza.domain.entity.OneCallWeatherEntitys.CityWeatherAllInformation
 import com.amirreza.domain.entity.WatchListWeather
 import com.amirreza.domain.repository.WatchListRepository
 import com.amirreza.domain.repository.WeatherService
 import com.amirreza.presentation.weatherapplication.MainActivity
+import com.amirreza.presentation.weatherapplication.base.CitySingleObserver
 import com.amirreza.presentation.weatherapplication.base.WeatherViewModel
-import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
@@ -22,65 +20,63 @@ class CityFragmentViewModel(
     private val daoDatabase: WatchListRepository
 ):WeatherViewModel() {
 
+    private var cityName:String = ""
+    var countryName:String = ""
+        private set
+
+    private val _mustIntroLottieAnimationShow = MutableLiveData(true)
+    val mustIntroLottieAnimationShow:LiveData<Boolean> =_mustIntroLottieAnimationShow
+
+    private val _mustNavigateToSearchFragment = MutableLiveData(false)
+    val mustNavigateToSearchFragment:LiveData<Boolean> =_mustNavigateToSearchFragment
+
+
     val transactionToDialogFragment = MutableLiveData(false)
-    var wantToDeleteCity:WatchListWeather? = null
 
-    private val _hasAnyCityInDatabase = MutableLiveData(false)
-    val hasAnyCityInDatabase:LiveData<Boolean> = _hasAnyCityInDatabase
+    private var wantToDeleteCity:WatchListWeather? = null
 
-    private val _isInternetConnectionStable = MutableLiveData(true)
-    val isInternetConnectionStable:LiveData<Boolean> = _isInternetConnectionStable
 
-    private val _theDataHasNotGetFromServerYet = MutableLiveData(true)
-    val theDataHasNotGetFromServerYet:LiveData<Boolean> = _theDataHasNotGetFromServerYet
+    private val _hasProblemInGettingDataFromServer = MutableLiveData(true)
+    val hasProblemInGettingDataFromServer:LiveData<Boolean> = _hasProblemInGettingDataFromServer
 
-    private var _citiesInWatchList: MutableList<WatchListWeather>? = null
-    var citiesInWatchList = _citiesInWatchList
 
-    private var firstCityInWatchList:WatchListWeather? = null
+    private var _citiesInWatchList: MutableList<WatchListWeather> = mutableListOf()
+    var citiesInWatchList:MutableList<WatchListWeather> = _citiesInWatchList
+
     private var _weatherOfTopCity:CityWeatherAllInformation? =null
-
     val weatherOfTopCity: CityWeatherAllInformation? = _weatherOfTopCity
 
-    private var searchRequestCityInSearchFragment:CityEntity? = null
 
-    init {
-        getData()
+    fun getData(){
+        fetchWatchListCitiesFromDataBase()
     }
 
-    private fun getData(){
-        if(searchRequestCityInSearchFragment!=null){
-            getCityDataFromDataBase(searchRequestCityInSearchFragment!!)
-            searchRequestCityInSearchFragment=null
-        }else {
-            daoDatabase.getAllCities()
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : SingleObserver<List<WatchListWeather>> {
-                    override fun onSubscribe(d: Disposable) {
-                        TODO("Not yet implemented")
+    private fun fetchWatchListCitiesFromDataBase(){
+        daoDatabase.getAllCities()
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CitySingleObserver<List<WatchListWeather>>(compositeDisposable) {
+                override fun onSuccess(list: List<WatchListWeather>) {
+                    if(list.isEmpty()){
+                        appShouldNavigateToSearchFragment()
+                    }else{
+                        _citiesInWatchList = list.toMutableList()
+                        setCityNameAndCountryName(_citiesInWatchList[0])
+                        getTopCityWeatherFromServer(_citiesInWatchList[0])
                     }
-
-                    override fun onSuccess(list: List<WatchListWeather>) {
-                        _theDataHasNotGetFromServerYet.value = true
-
-                        if (list.isNotEmpty()) {
-                            _hasAnyCityInDatabase.value = true
-                            _citiesInWatchList = list.toMutableList()
-                            firstCityInWatchList = list[0]
-                            getTopCityWeatherFromServer(firstCityInWatchList!!)
-                        } else {
-                            _hasAnyCityInDatabase.value = false
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
-        }
+                }
+            })
     }
+
+    private fun appShouldNavigateToSearchFragment(){
+        _mustNavigateToSearchFragment.value = true
+    }
+
+    private fun setCityNameAndCountryName(watchListWeather: WatchListWeather){
+        cityName = watchListWeather.cityName
+        countryName = watchListWeather.country
+    }
+
     private fun getTopCityWeatherFromServer(watchListWeather: WatchListWeather){
         apiService.getCityWeather(
             watchListWeather.lat,
@@ -90,67 +86,34 @@ class CityFragmentViewModel(
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<CityWeatherAllInformation>{
-                override fun onSubscribe(d: Disposable) {
-                    TODO("Not yet implemented")
-                }
-
+            .subscribe(object : CitySingleObserver<CityWeatherAllInformation>(compositeDisposable){
                 override fun onSuccess(cityWeatherAllInformation: CityWeatherAllInformation) {
                     _weatherOfTopCity = cityWeatherAllInformation
-                    _theDataHasNotGetFromServerYet.value = false
                     addCityToWatchList()
-                }
-
-                override fun onError(e: Throwable) {
-                    _isInternetConnectionStable.value = false
-                }
-            })
-    }
-    private fun getCityDataFromDataBase(cityEntity: CityEntity){
-        apiService.getCityWeather(
-            cityEntity.lat,
-            cityEntity.lon,
-            "metric",
-            MainActivity.API_KEY
-        )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<CityWeatherAllInformation>{
-                override fun onSubscribe(d: Disposable) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onSuccess(cityWeatherAllInformation: CityWeatherAllInformation) {
-                    _weatherOfTopCity = cityWeatherAllInformation
-                    _theDataHasNotGetFromServerYet.value = false
-                    addCityToWatchList()
-                }
-
-                override fun onError(e: Throwable) {
-                    _isInternetConnectionStable.value = false
                 }
             })
     }
 
-    fun addCityToWatchList(){
-        if(weatherOfTopCity!=null && _citiesInWatchList!=null){
-            val watchListWeather = WatchListWeather(
-                getCityName(),
-                getCountryName(),
-                weatherOfTopCity.current.timeDescription,
-                weatherOfTopCity.current.temperature.toString(),
-                weatherOfTopCity.getWeatherImagePath().toString(),
-                weatherOfTopCity.lat,
-                weatherOfTopCity.lon,
-                Calendar.getInstance().time.time
-            )
-            for (i in _citiesInWatchList!!.indices) {
-                if (watchListWeather.cityName == _citiesInWatchList!![i].cityName) {
-                    _citiesInWatchList!![i] = watchListWeather
-                }
+    private fun addCityToWatchList(){
+        val newWatchListWeather = WatchListWeather.convertCityWeatherAllDataToWatchListWeather(cityName,countryName,_weatherOfTopCity!!)
+        for (i in _citiesInWatchList.indices) {
+            if (newWatchListWeather.cityName == _citiesInWatchList[i].cityName) {
+                _citiesInWatchList[i] = newWatchListWeather
+            }
+        }
+        daoDatabase.addCityToWatchList(newWatchListWeather)
+    }
+
+
+    fun uiEvent(event: CityFragmentEvent){
+        when (event){
+            is CityFragmentEvent.LandingViewAnimationEnd->{
+                _mustIntroLottieAnimationShow.value = false
             }
         }
     }
+
+
     fun getAllCitiesInWatchList():ArrayList<WatchListWeather>{
         if(citiesInWatchList!=null) {
             val watchList = arrayListOf<WatchListWeather>()
@@ -183,29 +146,21 @@ class CityFragmentViewModel(
     fun getDailyWeather():List<CityDailyWeather>{
         return weatherOfTopCity?.current?.daily ?: listOf()
     }
-    fun hasNotAnyCityInDatabase(): Boolean {
-        return !_hasAnyCityInDatabase.value!!
-    }
-    fun getCityNameWithCountry():String{
-        return "${firstCityInWatchList?.cityName}, ${firstCityInWatchList?.country}"
-    }
-    private fun getCityName():String{
-        return firstCityInWatchList?.cityName ?: ""
-    }
-    fun getCountryName():String{
-        return firstCityInWatchList?.country ?: ""
-    }
+
+    fun getCityNameWithCountry():String = "$cityName, $countryName"
+
     fun onRefreshData(){
         getData()
-    }
-    fun setSearchRequestCityInSearchFragment(c:CityEntity){
-        searchRequestCityInSearchFragment = c
     }
 
     fun deleteWatchList(){
         if(wantToDeleteCity!=null) {
-            citiesInWatchList?.remove(wantToDeleteCity)
+            citiesInWatchList.remove(wantToDeleteCity)
             daoDatabase.deleteCityFromWatchList(wantToDeleteCity!!)
         }
+    }
+    fun addCityToDatabaseFromSearchFragment(watchListWeather: WatchListWeather){
+        setCityNameAndCountryName(watchListWeather)
+        daoDatabase.addCityToWatchList(watchListWeather)
     }
 }

@@ -1,4 +1,4 @@
-package com.amirreza.presentation.weatherapplication;
+package com.amirreza.common;
 
 import android.content.Context;
 

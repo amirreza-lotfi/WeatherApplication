@@ -8,12 +8,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.amirreza.domain.entity.CityEntity
-import com.amirreza.presentation.weatherapplication.AllCityInTheWorld
+import com.amirreza.common.AllCityInTheWorld
+import com.amirreza.domain.entity.WatchListWeather
 import com.amirreza.presentation.weatherapplication.CityFragment.CityFragmentViewModel
 import com.amirreza.weatherapplication.R
 import com.amirreza.weatherapplication.databinding.FragmentSearchBinding
 import com.amirreza.weatherapplication.databinding.SearchSeggestionItemBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.util.*
 
 class SearchFragment:Fragment() {
     private lateinit var binding: FragmentSearchBinding
@@ -34,29 +36,50 @@ class SearchFragment:Fragment() {
         }
         backButtonManaging()
     }
-
-    private fun setAutoCompleteSearch() {
-        val suggestionCities = AllCityInTheWorld(context)
-        val adapter = SearchTextViewAdapter(requireContext(), suggestionCities.allCitiesInTheWorld)
-        binding.searchFragmentCityName.setAdapter(adapter)
-    }
-
     private fun chooseSuggestion(){
         binding.searchFragmentCityName.setOnClickListener { selectedItem ->
             val binding = SearchSeggestionItemBinding.bind(selectedItem)
 
             val cityName: String = binding.searchSuggestionCityName.text as String
+            val country: String = getCountryName(selectedItem)
             val lat = getLatFromInformation(selectedItem)
             val lon = getLonFromInformation(selectedItem)
-            val country: String = getCountryName(selectedItem)
 
             setAutoCompleteSearchTextView(country)
 
-            cityFragmentViewModel.setSearchRequestCityInSearchFragment(CityEntity(lat,lon,cityName,country))
-            findNavController(requireActivity(),R.id.fragmentContainerView).navigate(R.id.action_searchFragment_to_cityFragment2)
 
+            cityFragmentViewModel
+                .addCityToDatabaseFromSearchFragment(
+                    WatchListWeather(
+                        cityName = cityName,
+                        country = country,
+                        description = "",
+                        temperature = "",
+                        weatherImagePath = "",
+                        lat = lat,
+                        lon = lon
+                    )
+                )
+
+
+
+            findNavController(requireView()).navigate(R.id.action_searchFragment_to_cityFragment2)
         }
     }
+
+
+
+
+    private fun setAutoCompleteSearch() {
+        val suggestionCities =
+            AllCityInTheWorld(
+                context
+            )
+        val adapter = SearchTextViewAdapter(requireContext(), suggestionCities.allCitiesInTheWorld)
+        binding.searchFragmentCityName.setAdapter(adapter)
+    }
+
+
 
     private fun getLatFromInformation(view: View): Double {
         val latTv = view.findViewById<TextView>(R.id.search_suggestion_city_other_information)

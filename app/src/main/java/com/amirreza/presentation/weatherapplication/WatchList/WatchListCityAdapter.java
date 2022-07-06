@@ -95,10 +95,10 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
             description.setText(watchListWeather.getDescription());
             weatherImage.setImageResource(Integer.parseInt(watchListWeather.getWeatherImagePath()));
 
-            itemView.setOnClickListener(view -> onItemClickCallBack.onClick(watchListWeather));
+            itemView.setOnClickListener(view -> onItemClickCallBack.onClickWatchListItem(watchListWeather));
 
             itemView.setOnLongClickListener(view -> {
-                onItemClickCallBack.onLongClick(watchListWeather);
+                onItemClickCallBack.onLongClickWatchListItem(watchListWeather);
                 return true;
             });
 

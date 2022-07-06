@@ -45,10 +45,10 @@ class App:Application() {
                     .build()
                     .watchListDao
             }
-            factory<WatchListRepository> {
+            single<WatchListRepository> {
                 WatchListRepositoryImpl(get())
             }
-            factory<WeatherService> {
+            single<WeatherService> {
                 WeatherServiceImpl(get())
             }
         }

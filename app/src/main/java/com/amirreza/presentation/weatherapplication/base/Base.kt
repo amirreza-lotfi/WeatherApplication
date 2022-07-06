@@ -1,6 +1,8 @@
 package com.amirreza.presentation.weatherapplication.base
 
+import android.animation.Animator
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -9,15 +11,38 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.amirreza.weatherapplication.R
+import io.reactivex.SingleObserver
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 open class WeatherViewModel: ViewModel() {
-    private val compositeDisposable = CompositeDisposable()
+    protected val compositeDisposable = CompositeDisposable()
     val progressBarLiveData = MutableLiveData<Boolean>()
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+}
+
+abstract class CitySingleObserver<T>(private val compositeDisposable: CompositeDisposable):SingleObserver<T>{
+    override fun onSubscribe(d: Disposable) {
+        compositeDisposable.add(d)
+    }
+
+    override fun onError(e: Throwable) {
+        e.printStackTrace()
+    }
+
+}
+
+abstract class CityLandingAnimationListeners: Animator.AnimatorListener{
+    override fun onAnimationCancel(p0: Animator?) {
+        Log.i("animation","animation is canceled")
+    }
+
+    override fun onAnimationRepeat(p0: Animator?) {
+        Log.i("animation","animation is repeating")
     }
 }
 
@@ -89,6 +114,7 @@ abstract class NonRefreshableWeatherFragment: Fragment(),NonRefreshAbleWeatherVi
     override val viewContext: Context?
         get() = context
 }
+
 abstract class RefreshableWeatherFragment: Fragment(),RefreshableView{
     override val rootView: SwipeRefreshLayout?
         get() = view as SwipeRefreshLayout

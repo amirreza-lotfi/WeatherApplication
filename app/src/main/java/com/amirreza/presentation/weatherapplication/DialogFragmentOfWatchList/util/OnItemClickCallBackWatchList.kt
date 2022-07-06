@@ -3,6 +3,6 @@ package com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.u
 import com.amirreza.domain.entity.WatchListWeather
 
 interface OnItemClickCallBackWatchList {
-    fun onClick(watchListWeather: WatchListWeather)
-    fun onLongClick(watchListWeather: WatchListWeather)
+    fun onClickWatchListItem(watchListWeather: WatchListWeather)
+    fun onLongClickWatchListItem(watchListWeather: WatchListWeather)
 }
