@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -19,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amirreza.domain.entity.CityAllWeatherDataEntity.CityAllWeatherData
 import com.amirreza.domain.entity.TimeProcess
-import com.amirreza.domain.entity.WatchListWeather
+import com.amirreza.domain.entity.SavedCityWeather
 import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList
 import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util.OnDialogActions
 import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util.OnItemClickCallBackWatchList
@@ -199,22 +198,22 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
         }
     }
 
-    override fun onClickWatchListItem(watchListWeather: WatchListWeather) {
+    override fun onClickWatchListItem(savedCityWeather: SavedCityWeather) {
 //        cityFragmentViewModel.setSearchRequestCityInSearchFragment(
-//            CityEntity(watchListWeather.toString(),watchListWeather.lon.toString())
+//            CityEntity(savedCityWeather.toString(),savedCityWeather.lon.toString())
 //        )
 //        setRefreshFragment()
     }
 
-    override fun onLongClickWatchListItem(watchListWeather: WatchListWeather) {
+    override fun onLongClickWatchListItem(savedCityWeather: SavedCityWeather) {
         DialogFragmentWatchList(object: OnDialogActions{
-            override fun onDeleteClicked(watchListWeather: WatchListWeather) {
+            override fun onDeleteClicked(savedCityWeather: SavedCityWeather) {
                 cityFragmentViewModel.deleteWatchList()
             }
 
-            override fun onCancelClicked(watchListWeather: WatchListWeather) {
+            override fun onCancelClicked(savedCityWeather: SavedCityWeather) {
                 TODO("Not yet implemented")
             }
-        },watchListWeather).showsDialog
+        },savedCityWeather).showsDialog
     }
 }

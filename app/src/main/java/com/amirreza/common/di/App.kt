@@ -1,4 +1,4 @@
-package com.amirreza.di
+package com.amirreza.common.di
 
 import android.app.Application
 import androidx.room.Room
@@ -18,6 +18,7 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -35,7 +36,7 @@ class App:Application() {
                 val retrofit = Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(MainActivity.BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
                 retrofit.create(RetrofitWeatherData::class.java)

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amirreza.domain.entity.WatchListWeather;
+import com.amirreza.domain.entity.SavedCityWeather;
 import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util.OnItemClickCallBackWatchList;
 import com.amirreza.weatherapplication.R;
 
@@ -17,15 +17,15 @@ import java.util.ArrayList;
 
 public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdapter.cityWeather> {
 
-    private ArrayList<WatchListWeather> cities;
+    private ArrayList<SavedCityWeather> cities;
     private final OnItemClickCallBackWatchList onItemClickCallBack;
 
-    public WatchListCityAdapter(ArrayList<WatchListWeather> cities, OnItemClickCallBackWatchList onItemClickCallBack ){
+    public WatchListCityAdapter(ArrayList<SavedCityWeather> cities, OnItemClickCallBackWatchList onItemClickCallBack ){
         this.cities = cities;
         this.onItemClickCallBack = onItemClickCallBack;
     }
 
-    public void setCities(ArrayList<WatchListWeather> cities){
+    public void setCities(ArrayList<SavedCityWeather> cities){
         this.cities.clear();
         notifyDataSetChanged();
     }
@@ -42,17 +42,17 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
         holder.bindData(cities.get(position));
     }
 
-    public void addWatchListWeather(WatchListWeather watchListWeather){
+    public void addWatchListWeather(SavedCityWeather savedCityWeather){
 
-        if (isCityUnique(watchListWeather)){
-            cities.add(0,watchListWeather);
+        if (isCityUnique(savedCityWeather)){
+            cities.add(0, savedCityWeather);
             notifyItemChanged(0);
         }
     }
 
-    public void deleteCityFromWatchList(WatchListWeather watchListWeather){
+    public void deleteCityFromWatchList(SavedCityWeather savedCityWeather){
         for(int i=0;i<cities.size();++i){
-            if(watchListWeather.getLon()==(cities.get(i).getLon()) && watchListWeather.getLat()==(cities.get(i).getLat())){
+            if(savedCityWeather.getLon()==(cities.get(i).getLon()) && savedCityWeather.getLat()==(cities.get(i).getLat())){
                 cities.remove(i);
                 notifyItemRemoved(i);
                 break;
@@ -60,9 +60,9 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
         }
     }
 
-    public boolean isCityUnique(WatchListWeather watchListWeather){
+    public boolean isCityUnique(SavedCityWeather savedCityWeather){
         for(int i=0;i<cities.size();++i){
-            if(watchListWeather.getCityName().equals(cities.get(i).getCityName()))
+            if(savedCityWeather.getCityName().equals(cities.get(i).getCityName()))
                 return false;
         }
         return true;
@@ -87,16 +87,16 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
             temperature = itemView.findViewById(R.id.watchlist_city_item_temperature);
         }
 
-        public void bindData(WatchListWeather watchListWeather){
-            cityName.setText(watchListWeather.getCityName());
-            temperature.setText(watchListWeather.getTemperature());
-            description.setText(watchListWeather.getDescription());
-            weatherImage.setImageResource(Integer.parseInt(watchListWeather.getWeatherImagePath()));
+        public void bindData(SavedCityWeather savedCityWeather){
+            cityName.setText(savedCityWeather.getCityName());
+            temperature.setText(savedCityWeather.getTemperature());
+            description.setText(savedCityWeather.getDescription());
+            weatherImage.setImageResource(Integer.parseInt(savedCityWeather.getWeatherImagePath()));
 
-            itemView.setOnClickListener(view -> onItemClickCallBack.onClickWatchListItem(watchListWeather));
+            itemView.setOnClickListener(view -> onItemClickCallBack.onClickWatchListItem(savedCityWeather));
 
             itemView.setOnLongClickListener(view -> {
-                onItemClickCallBack.onLongClickWatchListItem(watchListWeather);
+                onItemClickCallBack.onLongClickWatchListItem(savedCityWeather);
                 return true;
             });
 

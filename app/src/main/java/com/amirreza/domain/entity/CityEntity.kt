@@ -1,6 +1,6 @@
 package com.amirreza.domain.entity
 
-class CityEntity {
+class CityEntity(lat: String, lon: String) {
     var lat: Double
         private set
     var lon: Double
@@ -10,14 +10,7 @@ class CityEntity {
     var country: String? = null
         private set
 
-    constructor(lat: Double, lon: Double, city: String?, country: String?) {
-        this.lat = lat
-        this.lon = lon
-        this.city = city
-        this.country = country
-    }
-
-    constructor(lat: String, lon: String) {
+    init {
         this.lat = lat.toDouble()
         this.lon = lon.toDouble()
     }

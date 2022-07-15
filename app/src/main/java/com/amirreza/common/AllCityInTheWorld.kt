@@ -8,8 +8,8 @@ import java.io.InputStreamReader
 import java.lang.Exception
 import java.util.*
 
-class AllCityInTheWorld(context: Context) {
-    var allCitiesInTheWorld: LinkedList<String>? = null
+class AllCityInTheWorld(val context: Context) {
+    lateinit var allCitiesInTheWorld: MutableList<String>
     fun getCityCoordinators(name: String): CityEntity? {
         for (i in allCitiesInTheWorld!!.indices) {
             val city = allCitiesInTheWorld[i]
@@ -22,8 +22,11 @@ class AllCityInTheWorld(context: Context) {
     }
 
     init {
+        fetchDataFromFile()
+    }
+    private fun fetchDataFromFile(){
         try {
-            allCitiesInTheWorld = LinkedList()
+            allCitiesInTheWorld = mutableListOf()
             val cityInput = context.resources.openRawResource(R.raw.all)
             val cityReader = BufferedReader(InputStreamReader(cityInput))
             var cityLine: String

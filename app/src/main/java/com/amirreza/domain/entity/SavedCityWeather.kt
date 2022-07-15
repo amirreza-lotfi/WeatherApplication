@@ -6,7 +6,7 @@ import com.amirreza.domain.entity.CityAllWeatherDataEntity.CityAllWeatherData
 import java.util.*
 
 @Entity(tableName = "table_watch_lists")
-class WatchListWeather(
+class SavedCityWeather(
     @field:PrimaryKey var cityName: String,
     var country: String,
     var description: String,
@@ -17,8 +17,8 @@ class WatchListWeather(
     var createdTime:Long= Calendar.getInstance().time.time
 ){
     companion object{
-        fun convertCityWeatherAllDataToWatchListWeather(city:String,country:String,all:CityAllWeatherData):WatchListWeather{
-            return WatchListWeather(
+        fun convertCityWeatherAllDataToWatchListWeather(city:String,country:String,all:CityAllWeatherData):SavedCityWeather{
+            return SavedCityWeather(
                 cityName = city,
                 country = country,
                 description =  all.current.timeDescription,

@@ -1,4 +1,9 @@
-package com.amirreza.domain.usecases.remote_city_usecases
+package com.amirreza.domain.usecases.watchlist_usecases
 
-class GetCountOfSavedCity {
+import com.amirreza.domain.repository.WatchListRepository
+
+class GetCountOfSavedCity(private val watchListRepository: WatchListRepository) {
+    operator fun invoke(): Int {
+        return watchListRepository.getNumberOfCityInDatabase()
+    }
 }

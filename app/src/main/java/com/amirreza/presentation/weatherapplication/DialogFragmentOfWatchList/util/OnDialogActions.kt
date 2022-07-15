@@ -1,8 +1,8 @@
 package com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util
 
-import com.amirreza.domain.entity.WatchListWeather
+import com.amirreza.domain.entity.SavedCityWeather
 
 interface OnDialogActions {
-    fun onDeleteClicked(watchListWeather: WatchListWeather)
-    fun onCancelClicked(watchListWeather: WatchListWeather)
+    fun onDeleteClicked(savedCityWeather: SavedCityWeather)
+    fun onCancelClicked(savedCityWeather: SavedCityWeather)
 }

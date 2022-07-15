@@ -1,6 +1,5 @@
 package com.amirreza.presentation.weatherapplication.SearchFragment
 
-import android.content.ClipData
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +8,12 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
-import com.amirreza.domain.entity.CityEntity
 import com.amirreza.common.AllCityInTheWorld
-import com.amirreza.domain.entity.WatchListWeather
+import com.amirreza.domain.entity.SavedCityWeather
 import com.amirreza.presentation.weatherapplication.CityFragment.CityFragmentViewModel
 import com.amirreza.weatherapplication.R
 import com.amirreza.weatherapplication.databinding.FragmentSearchBinding
-import com.amirreza.weatherapplication.databinding.SearchSeggestionItemBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.util.*
 
 class SearchFragment:Fragment() {
     private lateinit var binding: FragmentSearchBinding
@@ -57,7 +53,7 @@ class SearchFragment:Fragment() {
 
                     cityFragmentViewModel
                         .addCityToDatabaseFromSearchFragment(
-                            WatchListWeather(
+                            SavedCityWeather(
                                 cityName = cityName,
                                 country = country,
                                 description = "",

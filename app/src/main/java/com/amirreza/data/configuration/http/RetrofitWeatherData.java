@@ -1,5 +1,6 @@
 package com.amirreza.data.configuration.http;
 
+import com.amirreza.domain.entity.CItyWeatherGettingFromServer.CityWeatherOneCalllllllllllllllllllllllllllllll;
 import com.amirreza.domain.entity.CityAllWeatherDataEntity.CityAllWeatherData;
 
 import io.reactivex.Single;
