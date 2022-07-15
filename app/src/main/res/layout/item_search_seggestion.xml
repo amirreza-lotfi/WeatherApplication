@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/search_suggestion_city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        tools:text="Ardebil"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/golden_white"
+        android:textSize="18sp"
+        android:letterSpacing="0.02"
+        android:background="@color/colorPrimary"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/search_suggestion_city_other_information"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="42dp"
+        android:layout_toEndOf="@id/search_suggestion_city_name"
+        tools:text="ardabil/ardabil province/iran"
+        android:gravity="center_vertical"
+        android:textColor="@color/lessImportantColor"/>
+
+</RelativeLayout>

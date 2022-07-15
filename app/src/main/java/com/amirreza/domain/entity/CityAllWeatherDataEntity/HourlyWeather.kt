@@ -19,7 +19,7 @@ data class HourlyWeather(
     val wind_speed: Double,
     var imagePath:Int? = null
 ){
-    fun setImage(sunrise: Long, sunset: Long) {
+    fun setImage(sunrise: Int, sunset: Int) {
         imagePath = if (dt in sunrise..sunset)
             getImageRecourse(weather[0].description, "day", temp)
         else getImageRecourse(weather[0].description, "night", temp)

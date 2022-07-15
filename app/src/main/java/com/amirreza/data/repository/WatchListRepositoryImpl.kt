@@ -18,7 +18,7 @@ class WatchListRepositoryImpl(private val watchListDou: WatchListDouInterface):W
         watchListDou.delete(savedCityWeather)
 
     }
-    override fun getNumberOfCityInDatabase(): Int {
+    override fun getNumberOfCityInDatabase(): Single<Int> {
         return watchListDou.numberOfCityInDatabase
     }
 }

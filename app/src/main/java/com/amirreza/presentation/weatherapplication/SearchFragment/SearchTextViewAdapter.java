@@ -25,7 +25,7 @@ public class SearchTextViewAdapter extends ArrayAdapter<String>  {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if(convertView==null)
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_seggestion_item,parent,false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_seggestion,parent,false);
         String[]cityAndCountry = getItem(position).split("!");
 
         TextView cityName = convertView.findViewById(R.id.search_suggestion_city_name);

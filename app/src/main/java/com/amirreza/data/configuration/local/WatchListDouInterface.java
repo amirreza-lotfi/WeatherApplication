@@ -25,6 +25,6 @@ public interface WatchListDouInterface {
     Single<List<SavedCityWeather>> getAllCities();
 
     @Query("SELECT count(*) From table_watch_lists")
-    int getNumberOfCityInDatabase();
+    Single<Integer> getNumberOfCityInDatabase();
 
 }

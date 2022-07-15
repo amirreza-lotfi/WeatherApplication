@@ -7,5 +7,5 @@ interface WatchListRepository {
     fun getAll(): Single<List<SavedCityWeather>>
     fun addCity(savedCityWeather: SavedCityWeather)
     fun deleteCity(savedCityWeather: SavedCityWeather)
-    fun getNumberOfCityInDatabase():Int
+    fun getNumberOfCityInDatabase():Single<Int>
 }

@@ -18,12 +18,5 @@ data class CurrentWeather(
     val wind_deg: Int,
     val wind_speed: Double,
     var picturePath: Int = 0,
-    var timeDescription: String = ""
-){
-    fun setTimeDescription() {
-        timeDescription = if (dt in sunrise..sunset) "day" else "night"
-    }
-    fun setPicturePath(){
-        picturePath = getImageRecourse(weather[0].description,timeDescription,temp)
-    }
-}
+    var timeDescription: String? = null
+)

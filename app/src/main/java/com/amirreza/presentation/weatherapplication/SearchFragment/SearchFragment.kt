@@ -8,16 +8,15 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.amirreza.common.AllCityInTheWorld
-import com.amirreza.domain.entity.SavedCityWeather
-import com.amirreza.presentation.weatherapplication.CityFragment.CityFragmentViewModel
 import com.amirreza.weatherapplication.R
 import com.amirreza.weatherapplication.databinding.FragmentSearchBinding
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment:Fragment() {
     private lateinit var binding: FragmentSearchBinding
-    private val cityFragmentViewModel by sharedViewModel<CityFragmentViewModel>()
+    private val searchFragmentViewModel by viewModel<SearchFragmentViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSearchBinding.inflate(inflater,container,false)
@@ -47,24 +46,9 @@ class SearchFragment:Fragment() {
                     val lon = getLonFromInformation(view)
 
                     setAutoCompleteSearchTextView(country)
+                    searchFragmentViewModel.addCityToWatchList(cityName,country,lat,lon)
 
-
-                    cityFragmentViewModel
-                        .addCityToDatabaseFromSearchFragment(
-                            SavedCityWeather(
-                                cityName = cityName,
-                                country = country,
-                                description = "",
-                                temperature = "",
-                                weatherImagePath = "",
-                                lat = lat,
-                                lon = lon
-                            )
-                        )
-
-
-
-                    findNavController(requireView()).popBackStack()
+                    findNavController().navigate(R.id.action_searchFragment_to_cityFragment)
                 }
             }
         )
@@ -97,6 +81,7 @@ class SearchFragment:Fragment() {
         }
     }
 }
+
 interface ItemClickListener{
     fun onClick(view: View)
 }

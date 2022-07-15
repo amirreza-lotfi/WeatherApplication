@@ -1,4 +1,4 @@
-package com.amirreza.presentation.weatherapplication.WatchList;
+package com.amirreza.presentation.weatherapplication.CityFragment.WatchList;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdapter.cityWeather> {
 
-    private ArrayList<SavedCityWeather> cities;
+    private final ArrayList<SavedCityWeather> cities;
     private final OnItemClickCallBackWatchList onItemClickCallBack;
 
     public WatchListCityAdapter(ArrayList<SavedCityWeather> cities, OnItemClickCallBackWatchList onItemClickCallBack ){
@@ -33,7 +33,7 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
 
     @Override
     public cityWeather onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.watchlist_city_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_watchlist_city,parent,false);
         return new cityWeather(view);
     }
 

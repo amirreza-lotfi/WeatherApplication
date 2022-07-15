@@ -64,14 +64,5 @@ data class DailyWeather(
 
     @SerializedName("wind_speed")
     val windSpeed: Double,
-    private var imagePath: Int = 0
-){
-
-    fun setImage(){
-        imagePath = getImageRecourse(
-            weather[0].description,
-            "day",
-            temp.day
-        )
-    }
-}
+    private var imagePath: Int? = null
+)

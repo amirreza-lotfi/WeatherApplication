@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amirreza.domain.entity.CityAllWeatherDataEntity.DailyWeather;
 import com.amirreza.domain.entity.TimeProcess;
-import com.amirreza.weatherapplication.databinding.DailyWeatherItemBinding;
+import com.amirreza.weatherapplication.databinding.ItemDailyWeatherBinding;
 
 import java.util.List;
 
 public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapter.ViewHolder> {
     List<DailyWeather> dailyWeather;
-    DailyWeatherItemBinding binding;
+    ItemDailyWeatherBinding binding;
 
     public DailyWeatherAdapter(List<DailyWeather> dailyWeather){
         this.dailyWeather = dailyWeather;
@@ -24,7 +24,7 @@ public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        binding = DailyWeatherItemBinding.inflate(
+        binding = ItemDailyWeatherBinding.inflate(
                 LayoutInflater.from(parent.getContext()),
                 parent,
                 false

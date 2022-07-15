@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_frame_layout_recyclerview_container"
+    android:paddingHorizontal="24dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:paddingVertical="16dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/time_daily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="seddptamber 22, wed" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/weather_description"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/lessImportantColor"
+        android:textSize="14sp"
+        android:gravity="center|top"
+        app:layout_constraintEnd_toEndOf="@+id/time_daily"
+        app:layout_constraintStart_toStartOf="@+id/time_daily"
+        app:layout_constraintTop_toBottomOf="@+id/time_daily"
+        tools:text="clear y" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/weather_description_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_rain_snow" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/temperature_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="7.5dp"
+        android:src="@drawable/ic_thermometer"
+        app:layout_constraintEnd_toStartOf="@id/temp_value"
+        app:layout_constraintTop_toTopOf="@id/temp_value" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/humidity_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/ic_humidity"
+        app:layout_constraintEnd_toStartOf="@id/humidity_value"
+        app:layout_constraintTop_toTopOf="@id/humidity_value" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/wind_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/ic_wind"
+        app:layout_constraintEnd_toStartOf="@id/wind_value"
+        app:layout_constraintTop_toTopOf="@id/wind_value" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/temp_value"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/humidity_value"
+        app:layout_constraintEnd_toStartOf="@id/weather_description_image"
+        app:layout_constraintTop_toTopOf="@+id/weather_description_image"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        tools:text="327°/124°" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/humidity_value"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/wind_value"
+        app:layout_constraintEnd_toStartOf="@id/weather_description_image"
+        app:layout_constraintTop_toBottomOf="@+id/temp_value"
+        tools:text="4555555%°" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/wind_value"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/weather_description_image"
+        app:layout_constraintEnd_toStartOf="@id/weather_description_image"
+        app:layout_constraintTop_toBottomOf="@+id/humidity_value"
+        tools:text="15555.1km/h" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

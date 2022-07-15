@@ -11,21 +11,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amirreza.domain.entity.CityAllWeatherDataEntity.HourlyWeather;
 import com.amirreza.domain.entity.TimeProcess;
 import com.amirreza.weatherapplication.R;
-import com.amirreza.weatherapplication.databinding.HourlyCityStateItemBinding;
+import com.amirreza.weatherapplication.databinding.ItemHourlyCityStateBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdapter.ViewHolder> {
     private List<HourlyWeather> cityHourlyWeathers;
-    HourlyCityStateItemBinding binding;
+    ItemHourlyCityStateBinding binding;
 
     public HourlyWeatherAdapter(List<HourlyWeather> data){
         cityHourlyWeathers = data;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        binding = HourlyCityStateItemBinding.inflate(
+        binding = ItemHourlyCityStateBinding.inflate(
                 LayoutInflater.from(parent.getContext()),
                 parent,
                 false

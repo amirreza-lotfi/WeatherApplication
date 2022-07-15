@@ -17,7 +17,9 @@ import com.amirreza.domain.usecases.watchlist_usecases.DeleteCityFromWatchList
 import com.amirreza.domain.usecases.watchlist_usecases.GetAllSavedCities
 import com.amirreza.domain.usecases.watchlist_usecases.GetCountOfSavedCity
 import com.amirreza.presentation.weatherapplication.CityFragment.CityFragmentViewModel
+import com.amirreza.presentation.weatherapplication.LandingFragment.LandingViewModel
 import com.amirreza.presentation.weatherapplication.MainActivity
+import com.amirreza.presentation.weatherapplication.SearchFragment.SearchFragmentViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -72,6 +74,12 @@ class App:Application() {
         val viewModel = module{
             viewModel {
                 CityFragmentViewModel(get(),get())
+            }
+            viewModel {
+                LandingViewModel(get())
+            }
+            viewModel{
+                SearchFragmentViewModel(get())
             }
         }
 

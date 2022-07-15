@@ -19,6 +19,6 @@ data class CityAllWeatherData(
         return "Feel Like : ${this.current.feels_like.toInt()}°"
     }
     fun getRangeOfCurrentTemperature():String{
-        return "${this.daily[0].temp.min}°/ ${this.daily[0].temp.max}°"
+        return "${this.daily[0].temp.min.toInt()}°/ ${this.daily[0].temp.max.toInt()}°"
     }
 }

@@ -1,379 +1,445 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/city_fragment_swiper_refresh">
-    <androidx.drawerlayout.widget.DrawerLayout
+    android:layout_height="match_parent">
+
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/city_fragment_swiper_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/city_fragment_drawer_layout">
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/city_fragment_drawer_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context="com.amirreza.presentation.weatherapplication.CityFragment.CityFragmentFuck">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBarLayout"
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-                <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:id="@+id/city_fragment_col"
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appBarLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
+                        android:id="@+id/city_fragment_col"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:contentScrim="#011130"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                        <RelativeLayout
+                            android:id="@+id/title_information_city_fragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="124dp"
+                            android:background="#011130">
+
+                            <TextView
+                                android:id="@+id/city_fragment_city_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:layout_marginTop="56dp"
+                                android:gravity="center_horizontal|bottom"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="29sp"
+                                android:textStyle="bold"
+                                tools:text="Istgah rah ahan - garms" />
+
+                            <TextView
+                                android:id="@+id/city_fragment_updating_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_below="@+id/city_fragment_city_name"
+                                android:gravity="center_horizontal|top"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                tools:text="August 21, 2021" />
+
+                        </RelativeLayout>
+
+                        <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/city_fragment_toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:background="@color/colorPrimary"
+                            android:visibility="visible"
+                            app:layout_collapseMode="pin"
+                            tools:title="Ardebil" />
+
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.AppBarLayout>
+
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:contentScrim="#011130"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-                    <RelativeLayout
-                        android:id="@+id/title_information_city_fragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="124dp"
-                        android:background="#011130">
-
-                        <TextView
-                            android:layout_marginTop="56dp"
-                            android:id="@+id/city_fragment_city_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:gravity="center_horizontal|bottom"
-                            android:text=""
-                            android:textColor="@color/white"
-                            android:textSize="29sp"
-                            android:textStyle="bold"
-                            tools:text="Istgah rah ahan - garms" />
-
-                        <TextView
-                            android:id="@+id/city_fragment_updating_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="24dp"
-                            android:layout_below="@+id/city_fragment_city_name"
-                            android:gravity="center_horizontal|top"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            tools:text="August 21, 2021" />
-
-                    </RelativeLayout>
-
-                    <androidx.appcompat.widget.Toolbar
-                        android:background="@color/colorPrimary"
-                        android:id="@+id/city_fragment_toolbar"
-                        tools:title="Ardebil"
-                        android:visibility="visible"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        app:layout_collapseMode="pin"/>
-
-                </com.google.android.material.appbar.CollapsingToolbarLayout>
-            </com.google.android.material.appbar.AppBarLayout>
-
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:paddingBottom="20dp"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/city_fragment_weather_image"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        tools:src="@drawable/ic_thunderstorm_rain"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toEndOf="@+id/city_fragment_temperature_current"
-                        app:layout_constraintStart_toStartOf="@+id/city_fragment_temperature_current"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/city_fragment_temperature_current"
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:gravity="center"
-                        tools:text="-10°"
-                        android:textColor="@color/white"
-                        android:textSize="50sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.498"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/city_fragment_weather_image" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/city_fragment_feel_like"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        tools:text="Feel Like : 33°"
-                        app:layout_constraintTop_toBottomOf="@+id/city_fragment_temperature_current" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/city_fragment_description"
-                        android:layout_marginTop="3dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textSize="15sp"
-                        tools:text="clear sky"
-                        android:gravity="center"
-                        app:layout_constraintTop_toBottomOf="@+id/city_fragment_feel_like"/>
+                    android:background="@color/colorPrimary"
+                    android:paddingBottom="20dp"
+                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_current_state"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginVertical="20dp"
-                        android:background="@drawable/background_city_state"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/city_fragment_description">
+                        android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/tv_daily_range_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Daily Average"
-                            android:textColor="@color/lessImportantColor"
-                            android:textSize="13sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/tv_city_fragment_daily_range"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_pressure_text"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/city_fragment_weather_image"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintEnd_toEndOf="@+id/city_fragment_temperature_current"
+                            app:layout_constraintStart_toStartOf="@+id/city_fragment_temperature_current"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/ic_thunderstorm_rain" />
 
-                        <TextView
-                            android:id="@+id/tv_pressure_text"
-                            android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/city_fragment_temperature_current"
+                            android:layout_width="180dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_marginTop="3dp"
                             android:gravity="center"
-                            android:text="Pressure"
-                            android:textColor="@color/lessImportantColor"
-                            android:textSize="13sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_humidity_text"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/tv_daily_range_text"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tv_humidity_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Humidity"
-                            android:textColor="@color/lessImportantColor"
-                            android:textSize="13sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_wind_text"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/tv_pressure_text"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tv_wind_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Wind"
-                            android:textColor="@color/lessImportantColor"
-                            android:textSize="13sp"
+                            android:textColor="@color/white"
+                            android:textSize="50sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/tv_humidity_text"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintHorizontal_bias="0.498"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/city_fragment_weather_image"
+                            tools:text="-10°" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_city_fragment_daily_range"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/city_fragment_feel_like"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:gravity="center"
-                            tools:text="19°/16°"
-                            android:textColor="@color/white"
-                            android:textSize="12.7sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/tv_daily_range_text"
-                            app:layout_constraintStart_toStartOf="@+id/tv_daily_range_text"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_daily_range_text" />
+                            app:layout_constraintTop_toBottomOf="@+id/city_fragment_temperature_current"
+                            tools:text="Feel Like : 33°" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_pressure_value"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/city_fragment_description"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="3dp"
                             android:gravity="center"
-                            tools:text="1019 pa"
-                            android:textColor="@color/white"
-                            android:textSize="12.7sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/tv_pressure_text"
-                            app:layout_constraintStart_toStartOf="@+id/tv_pressure_text"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_pressure_text" />
+                            app:layout_constraintTop_toBottomOf="@+id/city_fragment_feel_like"
+                            tools:text="clear sky" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cl_current_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginVertical="20dp"
+                            android:background="@drawable/background_city_state"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="10dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/city_fragment_description">
+
+                            <TextView
+                                android:id="@+id/tv_daily_range_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Daily Average"
+                                android:textColor="@color/lessImportantColor"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_city_fragment_daily_range"
+                                app:layout_constraintEnd_toStartOf="@+id/tv_pressure_text"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_pressure_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Pressure"
+                                android:textColor="@color/lessImportantColor"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@+id/tv_humidity_text"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/tv_daily_range_text"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_humidity_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Humidity"
+                                android:textColor="@color/lessImportantColor"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@+id/tv_wind_text"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/tv_pressure_text"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_wind_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Wind"
+                                android:textColor="@color/lessImportantColor"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/tv_humidity_text"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_city_fragment_daily_range"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="12.7sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_daily_range_text"
+                                app:layout_constraintStart_toStartOf="@+id/tv_daily_range_text"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_daily_range_text"
+                                tools:text="19°/16°" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_pressure_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="12.7sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_pressure_text"
+                                app:layout_constraintStart_toStartOf="@+id/tv_pressure_text"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_pressure_text"
+                                tools:text="1019 pa" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_hummidity_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="12.7sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_humidity_text"
+                                app:layout_constraintStart_toStartOf="@+id/tv_humidity_text"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_humidity_text"
+                                tools:text="45 %" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_wind_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="12.7sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_wind_text"
+                                app:layout_constraintStart_toStartOf="@+id/tv_wind_text"
+                                app:layout_constraintTop_toBottomOf="@id/tv_wind_text"
+                                tools:text="100.23 km/h" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_hummidity_value"
+                            android:id="@+id/city_fragment_hourly_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:gravity="center"
-                            tools:text="45 %"
-                            android:textColor="@color/white"
-                            android:textSize="12.7sp"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Hourly: "
+                            android:textSize="14sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/tv_humidity_text"
-                            app:layout_constraintStart_toStartOf="@+id/tv_humidity_text"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_humidity_text" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/cl_current_state" />
+
+                        <FrameLayout
+                            android:id="@+id/frame_layout_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/background_frame_layout_recyclerview_container"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/city_fragment_hourly_text">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/city_fragment_hourly_weather_container"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="16dp"
+                                android:nestedScrollingEnabled="false"
+                                android:orientation="horizontal" />
+                        </FrameLayout>
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_wind_value"
+                            android:id="@+id/city_fragment_daily_weather_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:gravity="center"
-                            tools:text="100.23 km/h"
-                            android:textColor="@color/white"
-                            android:textSize="12.7sp"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="30dp"
+                            android:text="Daily"
+                            android:textSize="14sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/tv_wind_text"
-                            app:layout_constraintStart_toStartOf="@+id/tv_wind_text"
-                            app:layout_constraintTop_toBottomOf="@id/tv_wind_text" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/frame_layout_container" />
+
+                        <FrameLayout
+                            android:id="@+id/city_fragment_container_daily_weather"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/city_fragment_daily_weather_text">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/city_fragment_recycler_view_daily"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:nestedScrollingEnabled="false" />
+                        </FrameLayout>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/city_fragment_hourly_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="27dp"
-                        android:layout_marginTop="20dp"
-                        android:text="Hourly: "
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cl_current_state" />
-
-                    <FrameLayout
-                        android:id="@+id/frame_layout_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/background_frame_layout_recyclerview_container"
-                        android:layout_marginHorizontal="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/city_fragment_hourly_text">
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/city_fragment_hourly_weather_container"
-                            android:layout_marginHorizontal="16dp"
-                            android:nestedScrollingEnabled="false"
-                            android:orientation="horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </FrameLayout>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/city_fragment_daily_weather_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Daily"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginStart="27dp"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        app:layout_constraintTop_toBottomOf="@id/frame_layout_container"/>
-
-                    <FrameLayout
-                        android:id="@+id/city_fragment_container_daily_weather"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginHorizontal="16dp"
-                        app:layout_constraintTop_toBottomOf="@+id/city_fragment_daily_weather_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/city_fragment_recycler_view_daily"
-                            android:layout_width="match_parent"
-                            android:nestedScrollingEnabled="false"
-                            android:layout_height="match_parent"/>
-                    </FrameLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
+                </androidx.core.widget.NestedScrollView>
 
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left">
-            <LinearLayout
-                android:layout_width="match_parent"
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navigation_view"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
-                android:background="@color/blackBlue"
-                android:orientation="vertical">
+                android:layout_gravity="left">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
-                    <ImageView
-                        android:id="@+id/city_fragment_add_city"
-                        android:layout_width="36dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_height="36dp"
-                        android:padding="8dp"
-                        android:layout_gravity="start|center"
-                        android:background="@drawable/ic_add_24"/>
-                </LinearLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
                     android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:id="@+id/city_fragment_watch_list_recycler_view">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:background="@color/blackBlue"
+                    android:orientation="vertical">
 
-            </LinearLayout>
-        </com.google.android.material.navigation.NavigationView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/view_landing"
-                app:lottie_autoPlay="true"
-                android:background="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:lottie_rawRes="@raw/earth"/>
-        </FrameLayout>
-</androidx.drawerlayout.widget.DrawerLayout>
+                        <ImageView
+                            android:id="@+id/city_fragment_add_city"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="start|center"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/ic_add_24"
+                            android:padding="8dp" />
+                    </LinearLayout>
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/city_fragment_watch_list_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+            </com.google.android.material.navigation.NavigationView>
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ops_fragment_ops"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blackBlue">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/blackBlue"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/fab_try_again"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/ops" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="@string/sorry_text"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_try_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="36dp"
+            android:backgroundTint="#04215A"
+            android:text="Try Again"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cornerRadius="10dp"
+            app:icon="@drawable/ic_refresh_24"
+            app:iconTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:paddingTop="56dp"
+        android:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/progress_bar_city_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:layout_marginTop="16dp" />
+    </FrameLayout>
+
+</FrameLayout>
 
 
 

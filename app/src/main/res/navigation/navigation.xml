@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/cityFragment">
+    app:startDestination="@id/landingFragment">
     <fragment
         android:id="@+id/cityFragment"
         android:name="com.amirreza.presentation.weatherapplication.CityFragment.CityFragment"
@@ -24,11 +24,27 @@
             android:id="@+id/action_searchFragment_to_cityFragment"
             app:destination="@id/cityFragment"
             app:popUpTo="@id/cityFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <dialog
         android:id="@+id/dialogFragmentWatchList"
         android:name="com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.DialogFragmentWatchList"
         android:label="fragment_dialog_watch_list"
         tools:layout="@layout/fragment_dialog_watch_list" />
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.amirreza.presentation.weatherapplication.LandingFragment.LandingFragment"
+        android:label="fragment_landing"
+        tools:layout="@layout/fragment_landing" >
+        <action
+            android:id="@+id/action_landingFragment_to_cityFragment"
+            app:destination="@id/cityFragment"
+            app:popUpTo="@id/landingFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_landingFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/landingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
