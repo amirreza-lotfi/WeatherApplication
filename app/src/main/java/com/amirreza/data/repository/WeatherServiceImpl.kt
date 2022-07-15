@@ -2,7 +2,6 @@ package com.amirreza.data.repository
 
 import android.util.Log
 import com.amirreza.data.configuration.http.RetrofitWeatherData
-import com.amirreza.domain.entity.CItyWeatherGettingFromServer.CityWeatherOneCalllllllllllllllllllllllllllllll
 import com.amirreza.domain.entity.CityAllWeatherDataEntity.CityAllWeatherData
 import com.amirreza.domain.repository.WeatherService
 import com.amirreza.presentation.weatherapplication.MainActivity

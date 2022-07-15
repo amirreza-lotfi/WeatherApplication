@@ -12,7 +12,7 @@ data class CurrentWeather(
     val sunrise: Int,
     val sunset: Int,
     val temp: Double,
-    val uvi: Int,
+    val uvi: Double,
     val visibility: Int,
     val weather: List<Weather>,
     val wind_deg: Int,
@@ -20,15 +20,10 @@ data class CurrentWeather(
     var picturePath: Int = 0,
     var timeDescription: String = ""
 ){
-    init {
-        setTimeDescription()
-        setPicturePath()
-    }
-
-    private fun setTimeDescription() {
+    fun setTimeDescription() {
         timeDescription = if (dt in sunrise..sunset) "day" else "night"
     }
-    private fun setPicturePath(){
+    fun setPicturePath(){
         picturePath = getImageRecourse(weather[0].description,timeDescription,temp)
     }
 }

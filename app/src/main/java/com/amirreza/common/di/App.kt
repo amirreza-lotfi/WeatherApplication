@@ -9,6 +9,13 @@ import com.amirreza.data.repository.WatchListRepositoryImpl
 import com.amirreza.data.repository.WeatherServiceImpl
 import com.amirreza.domain.repository.WatchListRepository
 import com.amirreza.domain.repository.WeatherService
+import com.amirreza.domain.usecases.CityWeatherUseCase
+import com.amirreza.domain.usecases.WatchListUsecase
+import com.amirreza.domain.usecases.remote_city_usecases.GetCityWeather
+import com.amirreza.domain.usecases.watchlist_usecases.AddCityToWatchList
+import com.amirreza.domain.usecases.watchlist_usecases.DeleteCityFromWatchList
+import com.amirreza.domain.usecases.watchlist_usecases.GetAllSavedCities
+import com.amirreza.domain.usecases.watchlist_usecases.GetCountOfSavedCity
 import com.amirreza.presentation.weatherapplication.CityFragment.CityFragmentViewModel
 import com.amirreza.presentation.weatherapplication.MainActivity
 import okhttp3.OkHttpClient
@@ -42,15 +49,24 @@ class App:Application() {
                 retrofit.create(RetrofitWeatherData::class.java)
             }
             single<WatchListDouInterface>{
-                Room.databaseBuilder(this@App,ApplicationDatabase::class.java,"Application_db")
-                    .build()
-                    .watchListDao
+                ApplicationDatabase.getInstance(this@App).watchListDao
             }
             single<WatchListRepository> {
                 WatchListRepositoryImpl(get())
             }
             single<WeatherService> {
                 WeatherServiceImpl(get())
+            }
+            single {
+                CityWeatherUseCase(GetCityWeather(get()))
+            }
+            single {
+                WatchListUsecase(
+                    AddCityToWatchList(get()),
+                    DeleteCityFromWatchList(get()),
+                    GetAllSavedCities(get()),
+                    GetCountOfSavedCity(get())
+                )
             }
         }
         val viewModel = module{

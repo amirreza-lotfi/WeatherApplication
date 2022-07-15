@@ -20,7 +20,5 @@ public abstract class ApplicationDatabase extends RoomDatabase {
         }
         return applicationDatabase;
     }
-
     public abstract WatchListDouInterface getWatchListDao();
-
 }

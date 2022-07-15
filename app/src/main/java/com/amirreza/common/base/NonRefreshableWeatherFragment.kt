@@ -1,4 +1,4 @@
-package com.amirreza.presentation.weatherapplication.base
+package com.amirreza.common.base
 
 import android.content.Context
 import androidx.coordinatorlayout.widget.CoordinatorLayout

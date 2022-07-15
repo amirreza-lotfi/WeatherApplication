@@ -1,4 +1,4 @@
-package com.amirreza.presentation.weatherapplication.base
+package com.amirreza.common.base
 
 import android.animation.Animator
 import android.util.Log

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -23,17 +24,17 @@ import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.Di
 import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util.OnDialogActions
 import com.amirreza.presentation.weatherapplication.DialogFragmentOfWatchList.util.OnItemClickCallBackWatchList
 import com.amirreza.presentation.weatherapplication.WatchList.WatchListCityAdapter
-import com.amirreza.presentation.weatherapplication.base.CityLandingAnimationListeners
-import com.amirreza.presentation.weatherapplication.base.RefreshableWeatherFragment
+import com.amirreza.common.base.CityLandingAnimationListeners
+import com.amirreza.common.base.RefreshableWeatherFragment
 import com.amirreza.weatherapplication.R
 import com.amirreza.weatherapplication.databinding.FragmentCityBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
+class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList {
 
     private lateinit var binding: FragmentCityBinding
-    private val cityFragmentViewModel:CityFragmentViewModel by viewModel()
+    private val cityFragmentViewModel: CityFragmentViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,8 +47,8 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val landingView = binding.viewLanding
 
-        cityFragmentViewModel.mustIntroLottieAnimationShow.observe(viewLifecycleOwner){ mustShow ->
-            if(mustShow){
+        cityFragmentViewModel.mustIntroLottieAnimationShow.observe(viewLifecycleOwner) { mustShow ->
+            if (mustShow) {
                 landingView.visibility = VISIBLE
                 landingView.addAnimatorListener(object : CityLandingAnimationListeners() {
                     override fun onAnimationStart(p0: Animator?) {
@@ -57,44 +58,37 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
                         cityFragmentViewModel.uiEvent(CityFragmentEvent.LandingViewAnimationEnd)
                     }
                 })
-            }else{
-                super.setProgressBarIndicator(mustShow)
+            } else {
                 cityFragmentViewModel.getData()
             }
         }
 
-        cityFragmentViewModel.mustNavigateToSearchFragment.observe(viewLifecycleOwner){ mustNavigate->
-
-            if(mustNavigate){
+        cityFragmentViewModel.mustNavigateToSearchFragment.observe(viewLifecycleOwner) { mustNavigate ->
+            if (mustNavigate) {
                 findNavController(view).navigate(R.id.action_cityFragment_to_searchFragment)
-            }else{
-                fillCityFragmentContent()
+            } else {
+                setWeatherData()
             }
         }
 
-
-        cityFragmentViewModel.transactionToDialogFragment.observe(viewLifecycleOwner){ isItemSelected ->
-            if(isItemSelected){
+        cityFragmentViewModel.transactionToDialogFragment.observe(viewLifecycleOwner) { isItemSelected ->
+            if (isItemSelected) {
                 cityFragmentViewModel.deleteWatchList()
                 findNavController(view).navigate(R.id.action_cityFragment_to_dialogFragmentWatchList)
             }
         }
 
+        cityFragmentViewModel.opsViewVisibility.observe(viewLifecycleOwner) { mustShow ->
+            setOpsViewVisibility(mustShow)
+        }
+        cityFragmentViewModel.progressBarLiveData.observe(viewLifecycleOwner) { mustShow ->
+            setProgressBarIndicator(mustShow)
+        }
+
         setToolbarAndCollapsingToolbarLayout()
         setDrawerNavigationView()
         setRefreshFragment()
-    }
-
-    private fun fillCityFragmentContent(){
-        cityFragmentViewModel.hasProblemInGettingDataFromServer.observe(viewLifecycleOwner){ mustShow ->
-            if(mustShow){
-                super.setProgressBarIndicator(!mustShow)
-                super.setOpsLayout(mustShow)
-            }else{
-                super.setProgressBarIndicator(true)
-                setWeatherData()
-            }
-        }
+        disappearLandingViewAfterStartFragment()
     }
 
     private fun setWeatherData() {
@@ -102,7 +96,6 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
         setUpWatchListAdapter()
         setHourlyWeatherAdapter()
         setDailyWeather()
-        super.setProgressBarIndicator(false)
     }
 
     private fun setCurrentWeather() {
@@ -124,20 +117,27 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
         binding.cityFragmentCol.isTitleEnabled = true
         binding.cityFragmentCol.title = cityFragmentViewModel.countryName
     }
-    private fun setUpWatchListAdapter(){
-        val watchListAdapter = WatchListCityAdapter(cityFragmentViewModel.getAllCitiesInWatchList(),this)
+
+    private fun setUpWatchListAdapter() {
+        val watchListAdapter =
+            WatchListCityAdapter(cityFragmentViewModel.getAllCitiesInWatchList(), this)
         binding.cityFragmentWatchListRecyclerView.adapter = watchListAdapter
-        binding.cityFragmentWatchListRecyclerView.layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
+        binding.cityFragmentWatchListRecyclerView.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
     }
-    private fun setHourlyWeatherAdapter(){
+
+    private fun setHourlyWeatherAdapter() {
         val hourlyWeatherAdapter = HourlyWeatherAdapter(cityFragmentViewModel.getHourlyWeather())
         binding.cityFragmentHourlyWeatherContainer.adapter = hourlyWeatherAdapter
-        binding.cityFragmentHourlyWeatherContainer.layoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
+        binding.cityFragmentHourlyWeatherContainer.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         solveRecyclerViewScroll(binding.cityFragmentHourlyWeatherContainer)
     }
-    private fun setDailyWeather(){
+
+    private fun setDailyWeather() {
         val dailyWeatherAdapter = DailyWeatherAdapter(cityFragmentViewModel.getDailyWeather())
-        binding.cityFragmentRecyclerViewDaily.layoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
+        binding.cityFragmentRecyclerViewDaily.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         binding.cityFragmentRecyclerViewDaily.adapter = dailyWeatherAdapter
         solveRecyclerViewScroll(binding.cityFragmentRecyclerViewDaily)
     }
@@ -159,7 +159,13 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
     }
 
     private fun setDrawerNavigationView() {
-        val watchListCity = ActionBarDrawerToggle(activity,binding.cityFragmentDrawerLayout,binding.cityFragmentToolbar, R.string.open, R.string.close)
+        val watchListCity = ActionBarDrawerToggle(
+            activity,
+            binding.cityFragmentDrawerLayout,
+            binding.cityFragmentToolbar,
+            R.string.open,
+            R.string.close
+        )
         binding.cityFragmentDrawerLayout.addDrawerListener(watchListCity)
         binding.cityFragmentDrawerLayout.addDrawerListener(object : DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
@@ -186,7 +192,8 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
             false
         }
     }
-    fun setRefreshLayout(enable:Boolean){
+
+    fun setRefreshLayout(enable: Boolean) {
         binding.cityFragmentSwiperRefresh.isEnabled = enable
     }
 
@@ -198,6 +205,12 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
         }
     }
 
+    private fun disappearLandingViewAfterStartFragment() {
+        cityFragmentViewModel.mustIntroLottieAnimationShow.observe(viewLifecycleOwner) { mustShow ->
+            binding.viewLanding.visibility = if (mustShow) VISIBLE else GONE
+        }
+    }
+
     override fun onClickWatchListItem(savedCityWeather: SavedCityWeather) {
 //        cityFragmentViewModel.setSearchRequestCityInSearchFragment(
 //            CityEntity(savedCityWeather.toString(),savedCityWeather.lon.toString())
@@ -206,7 +219,7 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
     }
 
     override fun onLongClickWatchListItem(savedCityWeather: SavedCityWeather) {
-        DialogFragmentWatchList(object: OnDialogActions{
+        DialogFragmentWatchList(object : OnDialogActions {
             override fun onDeleteClicked(savedCityWeather: SavedCityWeather) {
                 cityFragmentViewModel.deleteWatchList()
             }
@@ -214,6 +227,6 @@ class CityFragment : RefreshableWeatherFragment(), OnItemClickCallBackWatchList{
             override fun onCancelClicked(savedCityWeather: SavedCityWeather) {
                 TODO("Not yet implemented")
             }
-        },savedCityWeather).showsDialog
+        }, savedCityWeather).showsDialog
     }
 }

@@ -10,8 +10,11 @@ import com.amirreza.domain.entity.SavedCityWeather
 import com.amirreza.domain.repository.WatchListRepository
 import com.amirreza.domain.repository.WeatherService
 import com.amirreza.presentation.weatherapplication.MainActivity
-import com.amirreza.presentation.weatherapplication.base.CitySingleObserver
-import com.amirreza.presentation.weatherapplication.base.WeatherViewModel
+import com.amirreza.common.base.CitySingleObserver
+import com.amirreza.common.base.WeatherViewModel
+import com.amirreza.common.base.asyncRequest
+import com.amirreza.domain.usecases.CityWeatherUseCase
+import com.amirreza.domain.usecases.WatchListUsecase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +22,8 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class CityFragmentViewModel(
-    private val apiService: WeatherService,
-    private val daoDatabase: WatchListRepository
+    private val cityWeatherUC: CityWeatherUseCase,
+    private val watchListUC: WatchListUsecase
 ) : WeatherViewModel() {
 
     private var cityName: String = ""
@@ -38,11 +41,6 @@ class CityFragmentViewModel(
 
     private var wantToDeleteCity: SavedCityWeather? = null
 
-
-    private val _hasProblemInGettingDataFromServer = MutableLiveData(true)
-    val hasProblemInGettingDataFromServer: LiveData<Boolean> = _hasProblemInGettingDataFromServer
-
-
     private var _citiesInWatchList: MutableList<SavedCityWeather> = mutableListOf()
     var citiesInWatchList: MutableList<SavedCityWeather> = _citiesInWatchList
 
@@ -55,18 +53,24 @@ class CityFragmentViewModel(
     }
 
     private fun fetchWatchListCitiesFromDataBase() {
-        daoDatabase.getAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        setProgressBarVisibility(true)
+        watchListUC.getAllSavedCities()
+            .asyncRequest()
             .subscribe(object : CitySingleObserver<List<SavedCityWeather>>(compositeDisposable) {
                 override fun onSuccess(list: List<SavedCityWeather>) {
+                    setOpsViewVisibility(false)
+
                     if (list.isEmpty()) {
+                        setProgressBarVisibility(false)
                         appShouldNavigateToSearchFragment()
                     } else {
                         _citiesInWatchList = list.toMutableList()
                         setCityNameAndCountryName(_citiesInWatchList[0])
                         getTopCityWeatherFromServer(_citiesInWatchList[0])
                     }
+                }
+                override fun onError(e: Throwable) {
+                    setOpsViewVisibility(true)
                 }
             })
     }
@@ -81,18 +85,18 @@ class CityFragmentViewModel(
     }
 
     private fun getTopCityWeatherFromServer(savedCityWeather: SavedCityWeather) {
-        apiService.getCityWeather(
-            savedCityWeather.lat,
-            savedCityWeather.lon,
-            "metric",
-            MainActivity.API_KEY
-        )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        setProgressBarVisibility(true)
+        cityWeatherUC.getCityWeather(savedCityWeather.lat,savedCityWeather.lon)
+            .asyncRequest()
+            .doFinally {setProgressBarVisibility(false)}
             .subscribe(object : CitySingleObserver<CityAllWeatherData>(compositeDisposable) {
                 override fun onSuccess(cityWeatherAllInformation: CityAllWeatherData) {
                     _weatherOfTopCity = cityWeatherAllInformation
                     addCityToWatchList()
+                }
+
+                override fun onError(e: Throwable) {
+                    setOpsViewVisibility(true)
                 }
             })
     }
@@ -108,9 +112,8 @@ class CityFragmentViewModel(
                 _citiesInWatchList[i] = newSavedCityWeather
             }
         }
-        daoDatabase.addCity(newSavedCityWeather)
+        watchListUC.addCityToWatchList(newSavedCityWeather)
     }
-
 
     fun uiEvent(event: CityFragmentEvent) {
         when (event) {
@@ -168,15 +171,23 @@ class CityFragmentViewModel(
     fun deleteWatchList() {
         if (wantToDeleteCity != null) {
             citiesInWatchList.remove(wantToDeleteCity)
-            daoDatabase.deleteCity(wantToDeleteCity!!)
+            watchListUC.deleteCityFromWatchList(wantToDeleteCity!!)
         }
     }
 
     fun addCityToDatabaseFromSearchFragment(savedCityWeather: SavedCityWeather) {
         setCityNameAndCountryName(savedCityWeather)
         viewModelScope.launch(Dispatchers.IO) {
-            daoDatabase.addCity(savedCityWeather)
+            watchListUC.addCityToWatchList(savedCityWeather)
         }
+    }
+
+    private fun setProgressBarVisibility(mustShow:Boolean){
+        progressBarLiveData.value = mustShow
+    }
+
+    private fun setOpsViewVisibility(mustShow:Boolean){
+        opsViewVisibility.value = mustShow
     }
 }
 

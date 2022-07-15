@@ -1,13 +1,13 @@
-package com.amirreza.presentation.weatherapplication.base
+package com.amirreza.common.base
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.amirreza.weatherapplication.R
 
-interface RefreshableView{
-    val rootView: SwipeRefreshLayout?
+interface NonRefreshAbleWeatherView{
+    val rootView: CoordinatorLayout?
     val viewContext: Context?
 
     fun setProgressBarIndicator(mustShow:Boolean){

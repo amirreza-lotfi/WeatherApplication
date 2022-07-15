@@ -34,10 +34,8 @@ class SearchFragment:Fragment() {
     }
 
 
-
-
     private fun setAutoCompleteSearch() {
-        val suggestionCities = AllCityInTheWorld(context)
+        val suggestionCities = AllCityInTheWorld(requireContext())
         val adapter = SearchTextViewAdapter(
             requireContext(),
             suggestionCities.allCitiesInTheWorld,

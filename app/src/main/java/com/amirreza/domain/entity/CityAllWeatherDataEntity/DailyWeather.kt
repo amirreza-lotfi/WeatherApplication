@@ -66,7 +66,8 @@ data class DailyWeather(
     val windSpeed: Double,
     private var imagePath: Int = 0
 ){
-    init {
+
+    fun setImage(){
         imagePath = getImageRecourse(
             weather[0].description,
             "day",
