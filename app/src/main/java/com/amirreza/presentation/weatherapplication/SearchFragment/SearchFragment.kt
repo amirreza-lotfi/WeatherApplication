@@ -45,7 +45,7 @@ class SearchFragment:Fragment() {
                     val lat = getLatFromInformation(view)
                     val lon = getLonFromInformation(view)
 
-                    setAutoCompleteSearchTextView(country)
+                    setAutoCompleteSearchTextView(cityName)
                     searchFragmentViewModel.addCityToWatchList(cityName,country,lat,lon)
 
                     findNavController().navigate(R.id.action_searchFragment_to_cityFragment)

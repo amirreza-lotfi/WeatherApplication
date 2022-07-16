@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdapter.cityWeather> {
 
-    private final ArrayList<SavedCityWeather> cities;
+    private ArrayList<SavedCityWeather> cities;
     private final OnItemClickCallBackWatchList onItemClickCallBack;
 
     public WatchListCityAdapter(ArrayList<SavedCityWeather> cities, OnItemClickCallBackWatchList onItemClickCallBack ){
@@ -26,7 +26,7 @@ public class WatchListCityAdapter extends RecyclerView.Adapter<WatchListCityAdap
     }
 
     public void setCities(ArrayList<SavedCityWeather> cities){
-        this.cities.clear();
+        this.cities = cities;
         notifyDataSetChanged();
     }
 

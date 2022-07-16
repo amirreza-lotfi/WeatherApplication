@@ -81,6 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancel_icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:background="@drawable/ic_baseline_clear_24"

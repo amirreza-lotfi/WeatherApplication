@@ -29,6 +29,8 @@ class CityFragment : Fragment(){
     private lateinit var binding:FragmentCityBinding
     private val cityFragmentViewModel: CityFragmentViewModel by viewModel()
 
+    private var watchListCityAdapter: WatchListCityAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,12 +48,6 @@ class CityFragment : Fragment(){
             }
         }
 
-        cityFragmentViewModel.transactionToDialogFragment.observe(viewLifecycleOwner) { isItemSelected ->
-            if (isItemSelected) {
-                cityFragmentViewModel.deleteWatchList()
-                findNavController(view).navigate(R.id.action_cityFragment_to_dialogFragmentWatchList)
-            }
-        }
 
         cityFragmentViewModel.opsViewVisibility.observe(viewLifecycleOwner) { mustShow ->
             binding.opsFragmentOps.visibility = if(mustShow) View.VISIBLE else View.GONE
@@ -95,7 +91,11 @@ class CityFragment : Fragment(){
     private fun setUpWatchListAdapter() {
         val recyclerViewWatchList = binding.cityFragmentWatchListRecyclerView
 
-        val watchListAdapter =
+
+        cityFragmentViewModel.citiesInWatchList.observe(viewLifecycleOwner){ array->
+            watchListCityAdapter?.setCities(array)
+        }
+        watchListCityAdapter =
             WatchListCityAdapter(
                 cityFragmentViewModel.citiesInWatchList.value!!,
                 object : OnItemClickCallBackWatchList{
@@ -103,23 +103,17 @@ class CityFragment : Fragment(){
                         cityFragmentViewModel.updateCityInWatchList(savedCityWeather)
                         closeNavigationDrawer()
                     }
-
                     override fun onLongClickWatchListItem(savedCityWeather: SavedCityWeather) {
                         DialogFragmentWatchList(object : OnDialogActions {
                             override fun onDeleteClicked(savedCityWeather: SavedCityWeather) {
-                                cityFragmentViewModel.deleteWatchList()
+                                cityFragmentViewModel.deleteFromWatchList(savedCityWeather)
                             }
-
-                            override fun onCancelClicked(savedCityWeather: SavedCityWeather) {
-                                TODO("Not yet implemented")
-                            }
-                        }, savedCityWeather)
+                        }, savedCityWeather).show(childFragmentManager,"")
                     }
                 }
             )
-
         recyclerViewWatchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        recyclerViewWatchList.adapter = watchListAdapter
+        recyclerViewWatchList.adapter = watchListCityAdapter
 
     }
 

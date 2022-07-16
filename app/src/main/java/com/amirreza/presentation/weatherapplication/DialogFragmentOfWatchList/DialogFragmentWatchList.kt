@@ -25,11 +25,16 @@ class DialogFragmentWatchList(
 
         binding.dialogDeleteBtn.setOnClickListener {
             onDialogActions.onDeleteClicked(savedCityWeather)
+            dismiss()
         }
         binding.dialogCancelBtn.setOnClickListener {
-            onDialogActions.onCancelClicked(savedCityWeather)
+            dismiss()
         }
-        binding.dialogCityName.text = savedCityWeather.cityName
+        binding.cancelIcon.setOnClickListener{
+            dismiss()
+        }
+
+        binding.dialogCityName.text = savedCityWeather.cityName+"?"
 
         return AlertDialog.Builder(context)
             .setView(binding.root)

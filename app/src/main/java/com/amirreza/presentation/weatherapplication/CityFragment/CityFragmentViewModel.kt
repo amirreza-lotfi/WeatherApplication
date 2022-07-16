@@ -14,6 +14,7 @@ import com.amirreza.domain.usecases.CityWeatherUseCase
 import com.amirreza.domain.usecases.WatchListUsecase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import okhttp3.internal.notify
 import java.util.*
 
 class CityFragmentViewModel(
@@ -24,10 +25,6 @@ class CityFragmentViewModel(
     var cityName: String = ""
     var countryName: String = ""
         private set
-
-    val transactionToDialogFragment = MutableLiveData(false)
-
-    private var wantToDeleteCity: SavedCityWeather? = null
 
     private var _citiesInWatchList= MutableLiveData<ArrayList<SavedCityWeather>>(arrayListOf())
     var citiesInWatchList: LiveData<ArrayList<SavedCityWeather>> = _citiesInWatchList
@@ -140,11 +137,17 @@ class CityFragmentViewModel(
         onRefreshData()
     }
 
-    fun deleteWatchList() {
-        if (wantToDeleteCity != null) {
-            _citiesInWatchList.value!!.remove(wantToDeleteCity)
-            watchListUC.deleteCityFromWatchList(wantToDeleteCity!!)
+    fun deleteFromWatchList(savedCityWeather: SavedCityWeather) {
+        _citiesInWatchList.value = arrayListOf<SavedCityWeather>().apply {
+            if(_citiesInWatchList.value!=null){
+                for(save:SavedCityWeather in _citiesInWatchList.value!!){
+                    if(save.cityName!= savedCityWeather.cityName){
+                        this.add(save)
+                    }
+                }
+            }
         }
+        watchListUC.deleteCityFromWatchList(savedCityWeather)
     }
 
     private fun setProgressBarVisibility(mustShow:Boolean){
